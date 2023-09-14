@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>{children}</body>
+      <p>Made By Rak Maniak, Alivka, Sonya and others</p>
     </html>
   );
 }
