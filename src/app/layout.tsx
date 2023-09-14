@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Logical Creativity App',
-  description: 'App for development of logical and creativity',
+  description:
+    'An application for the development of logical thinking skills and creativity.',
 };
 
 export default function RootLayout({
