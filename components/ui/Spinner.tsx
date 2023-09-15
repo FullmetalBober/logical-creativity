@@ -1,6 +1,6 @@
 //TODO: Add spinner
 const Spinner = () => {
-  return <div>Spinner</div>;
+  return <div></div>;
 };
 
 export default Spinner;
