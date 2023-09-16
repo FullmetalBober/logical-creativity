@@ -14,6 +14,8 @@ model Test {
   questions Question[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  User      User?      @relation(fields: [userId], references: [id])
+  userId    Int?
 }
 
 model Question {
@@ -30,4 +32,13 @@ model Answer {
   isCorrect  Boolean
   questionId Int
   question   Question @relation(fields: [questionId], references: [id])
+}
+
+model User {
+  id             Int    @id @default(autoincrement())
+  name           String
+  email          String @unique
+  image          String
+  password       String
+  completedTests Test[]
 }
