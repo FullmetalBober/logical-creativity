@@ -15,8 +15,14 @@ const Header = () => {
           </Link>
         </div>
         <div className="navbar-end gap-2">
-          <Link href="/auth/login">
-            <Button>Login</Button>
+          <Link href="api/auth/signin">
+            <Button>Sign in</Button>
+          </Link>
+          <Link href="api/auth/signup">
+            <Button>Sign up</Button>
+          </Link>
+          <Link href="api/auth/signout">
+            <Button>Sign out</Button>
           </Link>
         </div>
       </Navbar>
