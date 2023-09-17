@@ -1,14 +1,14 @@
 import { Control, FieldErrors, UseFormRegister, useFieldArray } from 'react-hook-form';
-import { TNewTestSchema } from '@/schemas/newTest';
+import { TTestSchema } from '@/schemas/test';
 import { Button, Input, Join } from 'react-daisyui';
 import AnswersInputs from './AnswersInputs';
 
 const errorClassName = (error: boolean) => `join-item ${error ? 'input-error' : ''}`;
 
 type Props = {
-  control: Control<TNewTestSchema>;
-  register: UseFormRegister<TNewTestSchema>;
-  errors: FieldErrors<TNewTestSchema>;
+  control: Control<TTestSchema>;
+  register: UseFormRegister<TTestSchema>;
+  errors: FieldErrors<TTestSchema>;
 };
 
 export default function QuestionsInputs({ control, register, errors }: Props) {

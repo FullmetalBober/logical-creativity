@@ -1,17 +1,23 @@
-import { Control, FieldErrors, UseFormRegister, useFieldArray } from 'react-hook-form';
-import { TNewTestSchema } from '@/schemas/newTest';
+import { Control, FieldErrors, UseFormRegister, useFieldArray, useWatch } from 'react-hook-form';
+import { TTestSchema, isCorrectCheck } from '@/schemas/test';
 import { Button, Checkbox, Input, Join } from 'react-daisyui';
 
 const errorClassName = (error: boolean) => `join-item ${error ? 'input-error' : ''}`;
 
 type Props = {
-  control: Control<TNewTestSchema>;
-  register: UseFormRegister<TNewTestSchema>;
-  errors: FieldErrors<TNewTestSchema>;
+  control: Control<TTestSchema>;
+  register: UseFormRegister<TTestSchema>;
+  errors: FieldErrors<TTestSchema>;
   questionIndex: number;
 };
 
 export default function AnswersInputs({ control, register, errors, questionIndex }: Props) {
+  const answers = useWatch({
+    control,
+    name: `questions.${questionIndex}.answers`,
+  });
+  const isCorrectError = !isCorrectCheck(answers);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: `questions.${questionIndex}.answers`,
@@ -23,7 +29,7 @@ export default function AnswersInputs({ control, register, errors, questionIndex
       isCorrect: false,
     });
   };
-  console.log(errors);
+
   return (
     <div>
       {fields.map(({ id }, index) => (
@@ -35,7 +41,7 @@ export default function AnswersInputs({ control, register, errors, questionIndex
             <Checkbox
               size="lg"
               {...register(`questions.${questionIndex}.answers.${index}.isCorrect`)}
-              className={errorClassName(!!errors.questions?.[questionIndex]?.answers?.[index]?.isCorrect)}
+              className={errorClassName(isCorrectError)}
             />
             <Input
               {...register(`questions.${questionIndex}.answers.${index}.text`)}
