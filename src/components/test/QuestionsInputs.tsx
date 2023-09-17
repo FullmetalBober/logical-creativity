@@ -37,7 +37,7 @@ export default function QuestionsInputs({ control, register, errors }: Props) {
                 {...register(`questions.${index}.text`)}
                 className={errorClassName(!!errors.questions?.[index]?.text)}
               />
-              <Button type="button" onClick={() => remove(index)} className="join-item">
+              <Button type="button" onClick={() => remove(index)} color="error" className="join-item">
                 Remove
               </Button>
             </Join>
@@ -45,7 +45,7 @@ export default function QuestionsInputs({ control, register, errors }: Props) {
           <AnswersInputs control={control} register={register} errors={errors} questionIndex={index} />
         </div>
       ))}
-      <Button type="button" onClick={onAppendHandler}>
+      <Button type="button" color="secondary" wide={true} onClick={onAppendHandler} className="mt-1">
         Add question
       </Button>
     </section>

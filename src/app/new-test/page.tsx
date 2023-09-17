@@ -10,10 +10,11 @@ const errorClassName = (error: boolean) => (error ? 'input-error' : '');
 
 export default function NewTest() {
   const {
+    getValues,
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors, isValid },
   } = useForm<TNewTestSchema>({
     resolver: zodResolver(newTestSchema),
     mode: 'onTouched',
@@ -33,6 +34,9 @@ export default function NewTest() {
           <Input {...register('title')} className={errorClassName(!!errors.title)} />
         </div>
         <QuestionsInputs control={control} register={register} errors={errors} />
+        <Button color="primary" wide={true} disabled={!isValid} className="mt-1">
+          Submit
+        </Button>
       </form>
     </main>
   );
