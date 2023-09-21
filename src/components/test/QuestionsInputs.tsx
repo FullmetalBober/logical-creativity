@@ -1,9 +1,8 @@
-import { Control, FieldErrors, UseFormRegister, useFieldArray } from 'react-hook-form';
+import { Control, FieldErrors, FieldPath, UseFormRegister, useFieldArray } from 'react-hook-form';
 import { TTestSchema } from '@/schemas/test';
 import { Button, Input, Join } from 'react-daisyui';
 import AnswersInputs from './AnswersInputs';
-
-const errorClassName = (error: boolean) => `join-item ${error ? 'input-error' : ''}`;
+import { errorClassChecker } from '@/utils/errorChecker';
 
 type Props = {
   control: Control<TTestSchema>;
@@ -12,9 +11,12 @@ type Props = {
 };
 
 export default function QuestionsInputs({ control, register, errors }: Props) {
+  const errorClassName = errorClassChecker();
+  const formPath: FieldPath<TTestSchema> = 'questions';
+
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'questions',
+    name: formPath,
   });
 
   const onAppendHandler = () => {
@@ -34,7 +36,7 @@ export default function QuestionsInputs({ control, register, errors }: Props) {
             </label>
             <Join>
               <Input
-                {...register(`questions.${index}.text`)}
+                {...register(`${formPath}.${index}.text`)}
                 className={errorClassName(!!errors.questions?.[index]?.text)}
               />
               <Button type="button" onClick={() => remove(index)} color="error" className="join-item">
