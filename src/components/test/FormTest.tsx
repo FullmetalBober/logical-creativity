@@ -3,9 +3,9 @@
 import { TTestSchema, testSchema } from '@/schemas/test';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, UseFormProps, useForm } from 'react-hook-form';
-import { Button, Input } from 'react-daisyui';
+import { Input } from '@nextui-org/input';
+import { Button } from '@nextui-org/button';
 import QuestionsInputs from './QuestionsInputs';
-import { errorClassChecker } from '@/utils/errorChecker';
 
 type Props = {
   submitAction: SubmitHandler<TTestSchema>;
@@ -13,7 +13,6 @@ type Props = {
 };
 
 export default function FormTest({ formParams, submitAction }: Props) {
-  const errorClassName = errorClassChecker();
   const {
     register,
     handleSubmit,
@@ -25,19 +24,15 @@ export default function FormTest({ formParams, submitAction }: Props) {
     ...formParams,
   });
 
-  const submitHandler = async (data: TTestSchema) => submitAction(data);
+  // const submitHandler = async (data: TTestSchema) => submitAction(data);
+  const submitHandler = async (data: TTestSchema) => console.log(data);
 
   return (
-    <main className="hero">
-      <form onSubmit={handleSubmit(submitHandler)}>
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Title</span>
-          </label>
-          <Input {...register('title')} className={errorClassName(!!errors.title)} />
-        </div>
+    <main className='max-w-3xl'>
+      <form onSubmit={handleSubmit(submitHandler)} className='flex flex-col justify-center gap-4'>
+        <Input {...register('title')} label='Title' variant='bordered' isInvalid={!!errors.title} />
         <QuestionsInputs control={control} register={register} errors={errors} />
-        <Button color="primary" wide={true} disabled={!isValid} className="mt-1">
+        <Button color='primary' size='lg' isDisabled={!isValid}>
           Submit
         </Button>
       </form>

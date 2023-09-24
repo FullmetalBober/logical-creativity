@@ -1,7 +1,8 @@
-import { Control, FieldErrors, FieldPath, UseFormRegister, useFieldArray, useWatch } from 'react-hook-form';
+import { Control, Controller, FieldErrors, FieldPath, UseFormRegister, useFieldArray, useWatch } from 'react-hook-form';
 import { TTestSchema, isCorrectCheck } from '@/schemas/test';
-import { Button, Checkbox, Input, Join } from 'react-daisyui';
-import { errorClassChecker } from '@/utils/errorChecker';
+import { Input } from '@nextui-org/input';
+import { Checkbox, CheckboxProps } from '@nextui-org/checkbox';
+import { Button } from '@nextui-org/button';
 
 type Props = {
   control: Control<TTestSchema>;
@@ -11,14 +12,12 @@ type Props = {
 };
 
 export default function AnswersInputs({ control, register, errors, questionIndex }: Props) {
-  const errorClassName = errorClassChecker('join-item');
   const formPath: FieldPath<TTestSchema> = `questions.${questionIndex}.answers`;
 
   const answers = useWatch({
     control,
     name: formPath,
   });
-  const isCorrectError = !isCorrectCheck(answers);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -32,30 +31,33 @@ export default function AnswersInputs({ control, register, errors, questionIndex
     });
   };
 
+  const checkboxProps: CheckboxProps = !isCorrectCheck(answers)
+    ? {
+        color: 'danger',
+        isInvalid: true,
+      }
+    : { color: 'success' };
   return (
-    <div>
+    <div className='flex flex-col gap-2'>
       {fields.map(({ id }, index) => (
-        <div key={id} className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Answer {index + 1}</span>
-          </label>
-          <Join className="items-center">
-            <Checkbox
-              size="lg"
-              {...register(`${formPath}.${index}.isCorrect`)}
-              className={errorClassName(isCorrectError)}
-            />
-            <Input
-              {...register(`${formPath}.${index}.text`)}
-              className={errorClassName(!!errors.questions?.[questionIndex]?.answers?.[index]?.text)}
-            />
-            <Button type="button" onClick={() => remove(index)} color="error" className="join-item">
-              Remove
-            </Button>
-          </Join>
+        <div key={id} className='flex items-center gap-1'>
+          <Controller
+            control={control}
+            name={`${formPath}.${index}.isCorrect`}
+            render={({ field: { onChange } }) => <Checkbox {...checkboxProps} size='lg' onChange={onChange} />}
+          />
+          <Input
+            {...register(`${formPath}.${index}.text`)}
+            label={`Answer ${index + 1}`}
+            variant='bordered'
+            isInvalid={!!errors.questions?.[questionIndex]?.answers?.[index]?.text}
+          />
+          <Button type='button' color='warning' size='lg' variant='bordered' onClick={() => remove(index)}>
+            Remove
+          </Button>
         </div>
       ))}
-      <Button type="button" color="accent" wide={true} onClick={onAppendHandler} className="mt-1">
+      <Button type='button' size='lg' onClick={onAppendHandler}>
         Add answer
       </Button>
     </div>

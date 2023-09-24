@@ -1,26 +1,42 @@
 'use client';
 
-import Link from 'next/link';
-import { Button, Navbar } from 'react-daisyui';
+import { Button } from '@nextui-org/button';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
+import SPALink from '../ui/SPALink';
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-30 bg-opacity-90 shadow-sm backdrop:blur">
-      <Navbar className="mx-auto md:max-w-[1500px]">
-        <div className="navbar-start">
-          <Link href="/">
-            <Button color="ghost" className="text-xl normal-case">
-              Logic Brain
+    <Navbar shouldHideOnScroll>
+      <NavbarBrand>
+        <SPALink href='/' className='font-bold text-inherit'>
+          Logic Brain
+        </SPALink>
+      </NavbarBrand>
+      {/* <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+        <NavbarItem>
+          <SPALink color='foreground' href='#'>
+            Features
+          </SPALink>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <SPALink href='#' aria-current='page'>
+            Customers
+          </SPALink>
+        </NavbarItem>
+      </NavbarContent> */}
+      <NavbarContent justify='end'>
+        <NavbarItem className='hidden lg:flex'>
+          <SPALink href='/auth/login'>Login</SPALink>
+        </NavbarItem>
+        <NavbarItem>
+          <SPALink href='/auth/signUp'>
+            <Button color='primary' variant='flat'>
+              Sign Up
             </Button>
-          </Link>
-        </div>
-        <div className="navbar-end gap-2">
-          <Link href="/auth/login">
-            <Button>Login</Button>
-          </Link>
-        </div>
-      </Navbar>
-    </header>
+          </SPALink>
+        </NavbarItem>
+      </NavbarContent>
+    </Navbar>
   );
 };
 
