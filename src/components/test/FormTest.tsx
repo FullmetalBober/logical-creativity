@@ -24,15 +24,14 @@ export default function FormTest({ formParams, submitAction }: Props) {
     ...formParams,
   });
 
-  // const submitHandler = async (data: TTestSchema) => submitAction(data);
-  const submitHandler = async (data: TTestSchema) => console.log(data);
+  const submitHandler = async (data: TTestSchema) => submitAction(data);
 
   return (
     <main className='max-w-3xl'>
       <form onSubmit={handleSubmit(submitHandler)} className='flex flex-col justify-center gap-4'>
         <Input {...register('title')} label='Title' variant='bordered' isInvalid={!!errors.title} />
         <QuestionsInputs control={control} register={register} errors={errors} />
-        <Button color='primary' size='lg' isDisabled={!isValid}>
+        <Button type='submit' color='primary' size='lg' isDisabled={!isValid}>
           Submit
         </Button>
       </form>
