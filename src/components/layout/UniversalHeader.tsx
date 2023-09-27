@@ -1,6 +1,9 @@
+'use client'
+import React from "react";
+
 const UniversalHeader = () => {
     return (
-        <div className="navbar bg-base-100" data-theme="aqua">
+        <div className="navbar bg-base-100" data-theme="night">
             <div className="flex-1">
                 <a className="btn btn-ghost normal-case text-xl">Home</a>
                 <a className="btn btn-ghost normal-case text-xl">Tests</a>
