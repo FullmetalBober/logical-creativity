@@ -12,26 +12,23 @@ const Header = () => {
           Logic Brain
         </SPALink>
       </NavbarBrand>
-      {/* <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-        <NavbarItem>
-          <SPALink color='foreground' href='#'>
-            Features
-          </SPALink>
-        </NavbarItem>
+      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
         <NavbarItem isActive>
-          <SPALink href='#' aria-current='page'>
-            Customers
+          <SPALink href='/new-test' aria-current='page'>
+            Create new test
           </SPALink>
         </NavbarItem>
-      </NavbarContent> */}
+      </NavbarContent>
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
           <SPALink href='/auth/login'>Login</SPALink>
         </NavbarItem>
         <NavbarItem>
-          <Button as={SPALink} color='primary' href='/auth/signUp' variant='flat'>
-            Sign Up
-          </Button>
+          <SPALink href='/auth/signUp'>
+            <Button color='primary' variant='flat'>
+              Sign Up
+            </Button>
+          </SPALink>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
