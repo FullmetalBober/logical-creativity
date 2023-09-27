@@ -2,17 +2,24 @@
 
 import { prisma } from '@/db';
 import { TTestSchema, testSchema, TQuestionSchema, TAnswerSchema } from '@/schemas/test';
+import { getErrorMessage } from '@/utils/error';
 
 export async function createTest(data: TTestSchema) {
-  testSchema.parse(data);
-  const testData = {
-    data: {
-      ...data,
-      questions: createQuestions(data.questions),
-    },
-  };
+  try {
+    data = testSchema.parse(data);
 
-  await prisma.test.create(testData);
+    const prismaTestData = {
+      data: {
+        ...data,
+        questions: createQuestions(data.questions),
+      },
+    };
+
+    const test = await prisma.test.create(prismaTestData);
+    console.log(test);
+  } catch (error) {
+    return { error: getErrorMessage(error) };
+  }
 }
 
 const createQuestions = (questions: TQuestionSchema[]) => ({
@@ -28,3 +35,5 @@ const createAnswers = (answers: TAnswerSchema[]) => ({
     isCorrect: answer.isCorrect,
   })),
 });
+
+export type TCreateTest = typeof createTest;
