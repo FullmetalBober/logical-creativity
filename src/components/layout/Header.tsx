@@ -26,6 +26,9 @@ const Header = () => {
       </NavbarContent> */}
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
+          <SPALink href='/card-game'>Play CardGame</SPALink>
+        </NavbarItem>
+        <NavbarItem className='hidden lg:flex'>
           <SPALink href='/auth/login'>Login</SPALink>
         </NavbarItem>
         <NavbarItem>
