@@ -1,9 +1,10 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { prisma } from '@/db';
+import { prisma } from '@/lib/db';
 import { compare } from 'bcrypt';
 import { User } from '@prisma/client';
+import { axiosInstance } from '@/lib/axios';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,35 +15,15 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password:', type: 'password', placeholder: 'jsmith' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
-        const user = await prisma?.user.findUnique({
-          where: {
-            email: credentials?.email,
-          },
-          include: {
-            completedTests: true,
-          },
+        const response = await axiosInstance.post('/api/login', {
+          email: credentials?.email,
+          password: credentials?.password,
         });
 
-        if (!user) {
-          return null;
-        }
+        const user = response.data;
 
-        const isPasswordValid = await compare(credentials.password, user.password);
-
-        if (!isPasswordValid) {
-          return null;
-        }
-
-        return {
-          id: String(user.id),
-          username: user.username,
-          email: user.email,
-          avatar: user.avatar,
-        };
+        if (user) return user;
+        else return null;
       },
     }),
     GoogleProvider({
