@@ -1,10 +1,13 @@
 'use client';
 
-import { Button } from '@nextui-org/button';
+import { useSession } from 'next-auth/react';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
 import SPALink from '../ui/SPALink';
+import LoginButton from '@/components/ui/LoginButton';
 
 const Header = () => {
+  const { data: session } = useSession();
+
   return (
     <Navbar shouldHideOnScroll>
       <NavbarBrand>
@@ -26,12 +29,7 @@ const Header = () => {
       </NavbarContent> */}
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
-          <SPALink href='/auth/login'>Login</SPALink>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={SPALink} color='primary' href='/auth/signUp' variant='flat'>
-            Sign Up
-          </Button>
+          <LoginButton session={session} />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
