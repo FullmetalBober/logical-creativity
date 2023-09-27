@@ -19,3 +19,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+main {
+  @apply max-w-[1064px] mx-auto;
+}
