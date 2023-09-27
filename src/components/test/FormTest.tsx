@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { TTestSchema, testSchema } from '@/schemas/test';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormProps } from 'react-hook-form';
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export default function FormTest({ formParams, submitAction }: Props) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,6 +33,7 @@ export default function FormTest({ formParams, submitAction }: Props) {
     const result = await submitAction(data);
     if (result?.error) return toast.error(result.error);
     toast.success('Test created successfully!');
+    router.push('/');
   };
 
   const disabledButton = !isValid || isSubmitting;
