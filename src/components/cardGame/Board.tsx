@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { CardType, getCardsArr, shuffle } from '@/app/card-game/cards';
-import { CardThing } from '@/components/Card';
+import { CardType, cardColors, shuffle } from '@/app/card-game/cards';
+import { CardThing } from '@/components/cardGame/Card';
 
-export function Board() {
+export default function Board() {
   const [allCards, setAllCards] = useState(
     shuffle(
-      [...getCardsArr(), ...getCardsArr()].map((item, index) => ({
-        ...item,
+      [...cardColors, ...cardColors].map((item, index) => ({
         id: index,
+        color: item,
         isOpened: false,
         isFound: false,
       })),
@@ -36,7 +36,7 @@ export function Board() {
   }
 
   return (
-    <div className='grid grid-rows-4 grid-cols-4 gap-4 py-4'>
+    <div className='grid grid-cols-4 grid-rows-4 gap-4 py-4'>
       {allCards.map((card) => (
         <CardThing onOpenCard={handleOpenedCard} key={card.id} {...card} />
       ))}

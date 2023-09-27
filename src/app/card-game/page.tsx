@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@nextui-org/button';
 import { useState } from 'react';
-import { Board } from '@/components/Board';
+import Board from '@/components/cardGame/Board';
 
 export default function Home() {
   const [gameRunning, setGameRunning] = useState(false);
@@ -11,7 +11,7 @@ export default function Home() {
   }
 
   return (
-    <main className='flex flex-col justify-center items-center'>
+    <main className='flex flex-col items-center justify-center'>
       <h1>
         {!gameRunning && 'Зіграти в гру "Знайти пару"'}
         {gameRunning && 'Гра почалась, успіхів!'}
