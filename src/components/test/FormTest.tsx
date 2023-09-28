@@ -6,16 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormProps } from 'react-hook-form';
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
-import QuestionsInputs from './QuestionsInputs';
 import toast from 'react-hot-toast';
-import { TCreateTest } from '@/app/new-test/actions';
+import { upsertTest } from '@/actions/tests.actions';
+import QuestionsInputs from './QuestionsInputs';
 
 type Props = {
-  submitAction: TCreateTest;
   formParams?: UseFormProps<TTestSchema>;
 };
 
-export default function FormTest({ formParams, submitAction }: Props) {
+export default function FormTest({ formParams }: Props) {
   const router = useRouter();
   const {
     register,
@@ -30,7 +29,7 @@ export default function FormTest({ formParams, submitAction }: Props) {
   });
 
   const submitHandler = async (data: TTestSchema) => {
-    const result = await submitAction(data);
+    const result = await upsertTest(data);
     if (result?.error) return toast.error(result.error);
     toast.success('Test created successfully!');
     router.push('/');
