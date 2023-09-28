@@ -9,8 +9,25 @@ datasource db {
 }
 
 model Test {
-  id        String @id @default(cuid())
-  testField String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int        @id @default(autoincrement())
+  title     String     @db.VarChar(255)
+  questions Question[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Question {
+  id      Int      @id @default(autoincrement())
+  text    String   @db.VarChar(255)
+  testId  Int
+  test    Test     @relation(fields: [testId], references: [id])
+  answers Answer[]
+}
+
+model Answer {
+  id         Int      @id @default(autoincrement())
+  text       String   @db.VarChar(255)
+  isCorrect  Boolean
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
 }
