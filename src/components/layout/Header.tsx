@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@nextui-org/button';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
 import SPALink from '../ui/SPALink';
@@ -24,11 +22,9 @@ const Header = () => {
           <SPALink href='/auth/login'>Login</SPALink>
         </NavbarItem>
         <NavbarItem>
-          <SPALink href='/auth/signUp'>
-            <Button color='primary' variant='flat'>
-              Sign Up
-            </Button>
-          </SPALink>
+          <Button as={SPALink} href='/auth/signUp' color='primary' variant='flat'>
+            Sign Up
+          </Button>
         </NavbarItem>
       </NavbarContent>
     </Navbar>

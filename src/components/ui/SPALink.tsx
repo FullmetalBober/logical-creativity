@@ -1,11 +1,16 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { Link, LinkProps } from '@nextui-org/link';
-import NextLink from 'next/link';
 
-type Props = Exclude<LinkProps, 'as'>;
+const SPALink: React.FC<LinkProps> = (props) => {
+  const router = useRouter();
+  const href = props.href || '';
 
-const SPALink: React.FC<Props> = (props) => {
+  const pressHandler = () => router.push(href);
+
   return (
-    <Link {...props} as={NextLink}>
+    <Link {...props} onPress={pressHandler}>
       {props.children}
     </Link>
   );
