@@ -1,7 +1,7 @@
-import NextLink from 'next/link';
 import { Link, LinkProps } from '@nextui-org/link';
+import NextLink from 'next/link';
 
-type Props = Omit<LinkProps, 'as'>;
+type Props = Exclude<LinkProps, 'as'>;
 
 const SPALink: React.FC<Props> = (props) => {
   return (
