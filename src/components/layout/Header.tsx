@@ -22,9 +22,11 @@ const Header = () => {
           <SPALink href='/auth/login'>Login</SPALink>
         </NavbarItem>
         <NavbarItem>
-          <Button as={SPALink} href='/auth/signUp' color='primary' variant='flat'>
-            Sign Up
-          </Button>
+          <SPALink href='/auth/signUp'>
+            <Button color='primary' variant='flat'>
+              Sign Up
+            </Button>
+          </SPALink>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
