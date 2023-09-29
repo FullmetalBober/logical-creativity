@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const answerSchema = z.object({
   id: z.number().optional(),
-  text: z.string().min(1).max(255),
+  text: z.string().trim().min(1).max(255),
   isCorrect: z.boolean().default(false),
 });
 
@@ -10,13 +10,19 @@ export const isCorrectCheck = (data: TAnswerSchema[]) => data.filter((answer) =>
 
 const questionSchema = z.object({
   id: z.number().optional(),
-  text: z.string().min(1).max(255),
-  answers: z.array(answerSchema).min(2).refine(isCorrectCheck, 'There must be exactly one correct answer'),
+  text: z.string().trim().min(1).max(255),
+  answers: z
+    .array(answerSchema)
+    .min(2)
+    .refine(isCorrectCheck, {
+      message: 'There must be exactly one correct answer',
+      path: ['isCorrect'],
+    }),
 });
 
 export const testSchema = z.object({
   id: z.number().optional(),
-  title: z.string().min(1).max(255),
+  title: z.string().trim().min(1).max(255),
   questions: z.array(questionSchema).nonempty(),
 });
 

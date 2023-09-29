@@ -12,6 +12,7 @@ type Props = {
 
 export default function QuestionsInputs({ control, register, errors }: Props) {
   const formPath: FieldPath<TTestSchema> = 'questions';
+  const errorPath = errors.questions;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -34,7 +35,7 @@ export default function QuestionsInputs({ control, register, errors }: Props) {
               {...register(`${formPath}.${index}.text`)}
               label={`Question ${index + 1}`}
               variant='bordered'
-              isInvalid={!!errors.questions?.[index]?.text}
+              isInvalid={!!errorPath?.[index]?.text}
             />
             <Button type='button' color='danger' size='lg' variant='bordered' onClick={() => remove(index)}>
               Remove

@@ -24,7 +24,6 @@ export default function FormTest({ formParams }: Props) {
   } = useForm<TTestSchema>({
     resolver: zodResolver(testSchema),
     mode: 'onTouched',
-    progressive: true,
     ...formParams,
   });
 

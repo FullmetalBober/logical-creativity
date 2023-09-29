@@ -13,6 +13,7 @@ type Props = {
 
 export default function AnswersInputs({ control, register, errors, questionIndex }: Props) {
   const formPath: FieldPath<TTestSchema> = `questions.${questionIndex}.answers`;
+  const errorPath = errors.questions?.[questionIndex]?.answers;
 
   const answers = useWatch({
     control,
@@ -44,13 +45,15 @@ export default function AnswersInputs({ control, register, errors, questionIndex
           <Controller
             control={control}
             name={`${formPath}.${index}.isCorrect`}
-            render={({ field: { onChange } }) => <Checkbox {...checkboxProps} size='lg' onChange={onChange} />}
+            render={({ field: { onChange, value } }) => (
+              <Checkbox {...checkboxProps} size='lg' onChange={onChange} isSelected={value} />
+            )}
           />
           <Input
             {...register(`${formPath}.${index}.text`)}
             label={`Answer ${index + 1}`}
             variant='bordered'
-            isInvalid={!!errors.questions?.[questionIndex]?.answers?.[index]?.text}
+            isInvalid={!!errorPath?.[index]?.text}
           />
           <Button type='button' color='warning' size='lg' variant='bordered' onClick={() => remove(index)}>
             Remove
