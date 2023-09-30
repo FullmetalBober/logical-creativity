@@ -4,9 +4,8 @@ type Props = { notes: TNote[] };
 function NotebookSidebar(props: Props) {
   return (
     <div className='notebookSidebar'>
-      <NotebookItem note={props.notes[0]}></NotebookItem>
-      <NotebookItem note={props.notes[1]}></NotebookItem>
-      <NotebookItem note={props.notes[2]}></NotebookItem>
+        {props.notes.map(note=> <NotebookItem key={note.id} note={note}></NotebookItem>)}
+
     </div>
   );
 }
