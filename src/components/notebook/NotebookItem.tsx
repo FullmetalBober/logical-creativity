@@ -1,16 +1,19 @@
-'use client'
-import {currentNoteId, TNote} from '@/app/notes/notes';
+'use client';
+
+import { useNoteContext } from '@/context/note-context';
+import { TNote } from '@/app/notes/notes';
 
 type Props = { note: TNote };
 
-function NotebookItem(props: Props) {
-    console.log(currentNoteId);
+function NotebookItem({ note }: Props) {
+  const { setNote } = useNoteContext();
+
+  const setNoteHandler = () => setNote(note);
   return (
-    <button className='notebookItem' onClick={() => {props.note.status= true} }>
-      {props.note.title}
+    <button className='notebookItem' onClick={setNoteHandler}>
+      {note.title}
     </button>
   );
 }
-
 
 export default NotebookItem;

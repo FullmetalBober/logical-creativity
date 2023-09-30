@@ -1,9 +1,15 @@
-import { TNote } from '@/app/notes/notes';
-type Props = { notes: TNote[] };
-function NotebookTextarea(props: Props) {
+'use client';
+
+import { useNoteContext } from '@/context/note-context';
+
+function NotebookTextarea() {
+  const { note } = useNoteContext();
   return (
-    <div className='notebookTextarea'>
-      <p id='test'></p>
+    <div>
+      <p>
+        {!note && 'No note selected'}
+        {note && note.text}
+      </p>
     </div>
   );
 }
