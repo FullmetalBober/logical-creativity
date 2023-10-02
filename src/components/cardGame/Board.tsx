@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CardType, cardColors, shuffle } from '@/app/card-game/cards';
 import { CardThing } from '@/components/cardGame/Card';
 
-export default function Board() {
+type boardProps = {
+  endGame: () => void;
+};
+
+export default function Board({endGame}: boardProps) {
+  const [openedCard, setOpenedCard] = useState<CardType>();
   const [allCards, setAllCards] = useState(
     shuffle(
       [...cardColors, ...cardColors].map((item, index) => ({
@@ -13,7 +18,11 @@ export default function Board() {
       })),
     ),
   );
-  const [openedCard, setOpenedCard] = useState<CardType>();
+
+  useEffect(()=> {
+    const isUnfound = allCards.some(el => el.isFound == false);
+    if(!isUnfound) endGame();
+  }, [allCards])
 
   function handleOpenedCard(item: CardType) {
     setAllCards((prevState) => prevState.map((el) => (el.id === item.id ? { ...el, isOpened: true } : el)));
@@ -30,10 +39,11 @@ export default function Board() {
             prevState.map((el) => (el.id === openedCard.id || el.id === item.id ? { ...el, isOpened: false } : el)),
           );
         }, 1000);
-
+        
       setOpenedCard(undefined);
     }
   }
+  
 
   return (
     <div className='grid grid-cols-4 grid-rows-4 gap-4 py-4'>

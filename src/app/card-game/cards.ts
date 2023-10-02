@@ -1,5 +1,3 @@
-import { semanticColors } from '@nextui-org/theme';
-
 export type CardType = {
   id: number;
   color: string;
@@ -8,12 +6,12 @@ export type CardType = {
 };
 
 export const cardColors = [
-  'bg-primary',
-  'bg-secondary-300',
-  'bg-success',
-  'bg-error',
-  'bg-warning',
-  'bg-default',
+  'red',
+  'blue',
+  'yellow',
+  'purple',
+  'green',
+  'pink',
 ];
 
 export function shuffle(arr: Array<CardType>) {
