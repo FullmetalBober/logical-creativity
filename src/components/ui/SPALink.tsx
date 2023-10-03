@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Link, LinkProps } from '@nextui-org/link';
 import NextLink from 'next/link';
+import { Link, LinkProps } from '@nextui-org/link';
 
-type Props = Exclude<LinkProps, 'as'>;
+type Props = Omit<LinkProps, 'as'>;
 
 const SPALink: React.FC<Props> = (props) => {
   return (
