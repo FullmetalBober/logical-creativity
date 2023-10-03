@@ -1,8 +1,8 @@
 'use server';
 
-import { prisma } from '@/db';
 import { TTestSchema, testSchema, TQuestionSchema, TAnswerSchema } from '@/schemas/test';
 import { getErrorMessage } from '@/utils/error';
+import prisma from '@/lib/db';
 
 export async function createTest(data: TTestSchema) {
   try {

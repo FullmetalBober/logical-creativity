@@ -1,3 +1,5 @@
+'use client';
+
 import { Control, Controller, FieldErrors, FieldPath, UseFormRegister, useFieldArray, useWatch } from 'react-hook-form';
 import { TTestSchema, isCorrectCheck } from '@/schemas/test';
 import { Input } from '@nextui-org/input';
