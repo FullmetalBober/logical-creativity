@@ -3,7 +3,6 @@
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { Divider, Spacer } from '@nextui-org/react';
 import { lazy } from 'react';
-import { TLoginUser } from '@/app/auth/login/actions';
 import { useRouter } from 'next/navigation';
 import MyModal from '@/components/ui/MyModal';
 import { IoWarningOutline } from 'react-icons/io5';
@@ -11,11 +10,10 @@ import { IoWarningOutline } from 'react-icons/io5';
 const LoginForm = lazy(() => import('@/components/auth/form/LoginForm'));
 
 type Props = {
-  loginUser: TLoginUser;
   authorized: boolean;
 };
 
-export default function Authorization({ loginUser, authorized }: Props) {
+export default function Authorization({ authorized }: Props) {
   const router = useRouter();
   const ModalHeaderElement = (
     <div className={'flex items-center'}>
@@ -54,7 +52,7 @@ export default function Authorization({ loginUser, authorized }: Props) {
         </CardHeader>
         <Divider />
         <CardBody className={'p-0'}>
-          <LoginForm submitAction={loginUser} />
+          <LoginForm />
         </CardBody>
       </Card>
     </div>

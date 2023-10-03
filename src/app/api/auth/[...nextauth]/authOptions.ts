@@ -19,34 +19,29 @@ export const authOptions: NextAuthOptions = {
 
         const { email, password } = credentials;
 
-        try {
-          const user = await prisma.user.findFirst({
-            where: {
-              email: email,
-            },
-          });
+        const user = await prisma.user.findFirst({
+          where: {
+            email: email,
+          },
+        });
 
-          if (!user) {
-            throw new Error('User not found. Check your email.');
-          }
-
-          const isPasswordValid = await bcrypt.compare(password, user.password);
-
-          if (!isPasswordValid) {
-            throw new Error('Invalid password.');
-          }
-
-          return {
-            id: user.id.toString(),
-            email: user.email,
-            role: user.role,
-            fullName: user.fullName,
-            image: user.image,
-          };
-        } catch (e) {
-          console.log('Error: ', e);
+        if (!user) {
           return null;
         }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+          return null;
+        }
+
+        return {
+          id: user.id.toString(),
+          email: user.email,
+          role: user.role,
+          fullName: user.fullName,
+          image: user.image,
+        };
       },
     }),
     GoogleProvider({

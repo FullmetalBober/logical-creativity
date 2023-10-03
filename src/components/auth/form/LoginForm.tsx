@@ -9,7 +9,6 @@ import { Divider, Spacer } from '@nextui-org/react';
 import SPALink from '@/components/ui/SPALink';
 import { signInSchema, TSignInSchema } from '@/schemas/signin';
 import toast from 'react-hot-toast';
-import { TLoginUser } from '@/app/auth/login/actions';
 import GoogleButton from '@/components/auth/buttons/GoogleButton';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -18,11 +17,10 @@ import { CiMail } from 'react-icons/ci';
 import { endIconInputClasses, pageLinks } from '@/constants';
 
 type Props = {
-  submitAction: TLoginUser;
   formParams?: UseFormProps<TSignInSchema>;
 };
 
-export default function LoginForm({ submitAction, formParams }: Props) {
+export default function LoginForm({ formParams }: Props) {
   const router = useRouter();
   const {
     register,
