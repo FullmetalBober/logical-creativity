@@ -1,9 +1,21 @@
-import { Button } from '@nextui-org/button';
+import { User } from '@nextui-org/user';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
   return (
     <main>
-      <Button>Click me</Button>
+      {session && session.user && session.user.image != null && (
+        <User
+          name={session.user.name}
+          description={session.user.email}
+          avatarProps={{
+            src: session.user.image,
+          }}
+        />
+      )}
     </main>
   );
 }
