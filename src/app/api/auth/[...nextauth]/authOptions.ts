@@ -2,26 +2,51 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { User } from '@prisma/client';
-import { axiosInstance } from '@/lib/axios';
+import { prisma } from '@/lib/db';
+import bcrypt from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email:', type: 'text', placeholder: 'some.email@gmail.com' },
-        password: { label: 'Password:', type: 'password', placeholder: 'jsmith' },
+        email: { label: 'Email:', type: 'text', required: true },
+        password: { label: 'Password:', type: 'password', required: true },
       },
       async authorize(credentials) {
-        const response = await axiosInstance.post('/api/login', {
-          email: credentials?.email,
-          password: credentials?.password,
-        });
+        console.log('authorize function called!');
+        if (!credentials) return null;
 
-        const user = response.data;
+        const { email, password } = credentials;
 
-        if (user) return user;
-        else return null;
+        try {
+          const user = await prisma.user.findFirst({
+            where: {
+              email: email,
+            },
+          });
+
+          if (!user) {
+            throw new Error('User not found. Check your email.');
+          }
+
+          const isPasswordValid = await bcrypt.compare(password, user.password);
+
+          if (!isPasswordValid) {
+            throw new Error('Invalid password.');
+          }
+
+          return {
+            id: user.id.toString(),
+            email: user.email,
+            role: user.role,
+            fullName: user.fullName,
+            image: user.image,
+          };
+        } catch (e) {
+          console.log('Error: ', e);
+          return null;
+        }
       },
     }),
     GoogleProvider({
@@ -29,12 +54,15 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  secret: process.env.SECRET,
   session: {
     strategy: 'jwt',
   },
   callbacks: {
     session: ({ session, token }) => {
-      console.log('Session callback ' + { session, token });
+      console.log('session callback called!');
+      if (session?.user) session.user.role = token.role;
+
       return {
         ...session,
         user: {
@@ -44,9 +72,10 @@ export const authOptions: NextAuthOptions = {
       };
     },
     jwt: async ({ token, user }) => {
-      console.log('JWT Callback ' + { token, user });
-
+      console.log('jwt callback called!');
       if (user) {
+        token.role = user.role;
+
         const u = user as unknown as User;
 
         return {
@@ -57,6 +86,40 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
+    //   signIn: async ({ user, account, profile }) => {
+    //     if (account?.provider === 'credentials') return true;
+    //
+    //     try {
+    //       console.log(user);
+    //       console.log(account);
+    //       console.log(profile);
+    //
+    //       if (!profile?.email || !profile?.name || !profile?.image) return false;
+    //
+    //       const isUserExist = await prisma.user.findFirst({
+    //         where: {
+    //           email: profile?.email,
+    //         },
+    //       });
+    //
+    //       if (isUserExist) return false;
+    //
+    //       // if (!isUserExist)
+    //       //   await prisma.user.create({
+    //       //     data: {
+    //       //       email: profile.email,
+    //       //       fullName: profile.name,
+    //       //       image: profile.image,
+    //       //       password: "",
+    //       //     },
+    //       //   });
+    //
+    //       return true;
+    //     } catch (error) {
+    //       console.log('Error: ', error);
+    //       return false;
+    //     }
+    //   },
   },
   pages: {
     signIn: '/auth/login',
