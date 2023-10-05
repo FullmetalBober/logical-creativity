@@ -12,7 +12,7 @@ const config: Config = {
   darkMode: 'class',
   plugins: [nextui(), require("daisyui")],
   daisyui: {
-    themes: ['aqua', 'light', 'night', 'synthwave']
+    themes: ['light', 'night', 'synthwave', 'aqua']
   }
 };
 export default config;

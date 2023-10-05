@@ -1,9 +1,10 @@
 'use client'
 import React from "react";
 
-const UniversalHeader = () => {
+// @ts-ignore
+const UniversalHeader = (props) => {
     return (
-        <div className="navbar bg-base-100" data-theme="night">
+        <div className="navbar bg-base-100" data-theme={props.theme}>
             <div className="flex-1">
                 <a className="btn btn-ghost normal-case text-xl">Home</a>
                 <a className="btn btn-ghost normal-case text-xl">Tests</a>
@@ -29,5 +30,6 @@ const UniversalHeader = () => {
         </div>
     );
 };
+
 
 export default UniversalHeader;
