@@ -10,7 +10,7 @@ const Footer = (props) => {
                 <p className="font-bold">
                     Logic Brain <br/>Providing cool stuff since 2023
                 </p>
-                <p>Copyright © 2023 - All right reserved</p>
+                <p>Copyright © 2023 - All rights reserved</p>
             </aside>
             <nav>
                 <div className="grid grid-flow-col gap-4">
