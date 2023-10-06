@@ -34,5 +34,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# idea
 /docs/
 /.idea/
+/.vscode/
+
+# dotenv-vault
+.env.me
+.flaskenv*
+!.env.project
+!.env.vault
