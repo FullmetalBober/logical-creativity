@@ -36,5 +36,4 @@ types/next-env.d.ts
 
 docs
 .idea
-/prisma/migrations/20230928051651_init/migration.sql
-/prisma/migrations/20230930130912_/migration.sql
+/prisma/migrations
