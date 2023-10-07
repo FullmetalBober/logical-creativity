@@ -24,13 +24,13 @@ export default function LoginButton({ session }: Props) {
   return (
     <>
       {session?.user ? (
-        <Button as={SPALink} href={'/auth/logout'} onClick={handleSignOut}>
-          Sign Out
-        </Button>
+        <SPALink href={'/auth/logout'}>
+          <Button onClick={handleSignOut}>Sign Out</Button>
+        </SPALink>
       ) : (
-        <Button as={SPALink} href={'/auth/login'} onClick={handleSignIn}>
-          Sign In
-        </Button>
+        <SPALink href={'/auth/login'}>
+          <Button onClick={handleSignIn}>Sign In</Button>
+        </SPALink>
       )}
     </>
   );

@@ -13,9 +13,9 @@ export default function RegisterButton({ session }: Props) {
   return (
     <>
       {!session && (
-        <Button as={SPALink} href={'/auth/register'}>
-          Sign Up
-        </Button>
+        <SPALink href={'/auth/register'}>
+          <Button>Sign Up</Button>
+        </SPALink>
       )}
     </>
   );
