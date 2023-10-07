@@ -25,7 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env
+.env.*
 
 # vercel
 .vercel
@@ -34,6 +34,13 @@ yarn-error.log*
 *.tsbuildinfo
 types/next-env.d.ts
 
+# idea
 docs
 .idea
 /prisma/migrations
+/.vscode/
+
+# dotenv-vault
+.flaskenv*
+!.env.project
+!.env.vault
