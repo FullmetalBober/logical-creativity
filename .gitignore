@@ -35,10 +35,10 @@ yarn-error.log*
 types/next-env.d.ts
 
 # idea
+/.vscode/
 docs
 .idea
 /prisma/migrations
-/.vscode/
 
 # dotenv-vault
 .flaskenv*
