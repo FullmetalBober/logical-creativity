@@ -1,5 +1,3 @@
-'use client';
-
 import { Control, FieldErrors, FieldPath, UseFormRegister, useFieldArray } from 'react-hook-form';
 import { TTestSchema } from '@/schemas/test';
 import { Input } from '@nextui-org/input';

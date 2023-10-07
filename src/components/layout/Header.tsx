@@ -1,5 +1,3 @@
-'use client';
-
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
 import SPALink from '../ui/SPALink';
 import LoginButton from '@/components/auth/buttons/LoginButton';
