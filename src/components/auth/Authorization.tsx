@@ -3,9 +3,8 @@
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { Divider, Spacer } from '@nextui-org/react';
 import { lazy } from 'react';
-import { useRouter } from 'next/navigation';
-import MyModal from '@/components/ui/MyModal';
 import { IoWarningOutline } from 'react-icons/io5';
+import AuthorizedModal from '@/components/auth/AuthorizedModal';
 
 const LoginForm = lazy(() => import('@/components/auth/form/LoginForm'));
 
@@ -14,7 +13,6 @@ type Props = {
 };
 
 export default function Authorization({ authorized }: Props) {
-  const router = useRouter();
   const ModalHeaderElement = (
     <div className={'flex items-center'}>
       <IoWarningOutline className={'mr-2 text-2xl'} />
@@ -29,16 +27,7 @@ export default function Authorization({ authorized }: Props) {
   );
 
   if (authorized)
-    return (
-      <MyModal
-        isTriggered={true}
-        ModalHeaderElement={ModalHeaderElement}
-        ModalBodyElement={ModalBodyElement}
-        actionButton={{ text: 'Go back', color: 'warning', handler: () => router.back() }}
-        size={'lg'}
-        color={'warning'}
-      />
-    );
+    return <AuthorizedModal ModalHeaderElement={ModalHeaderElement} ModalBodyElement={ModalBodyElement} />;
 
   return (
     <div className={'flex items-center justify-center'}>
