@@ -61,10 +61,7 @@ export default function RegisterForm({ submitAction, formParams }: Props) {
           label={'Full name'}
           variant={'bordered'}
           isInvalid={!!errors.fullName}
-          {...register('fullName', {
-            required: true,
-            minLength: 8,
-          })}
+          {...register('fullName')}
           endContent={<MdDriveFileRenameOutline className={endIconInputClasses} />}
         />
         <Spacer y={4} />
@@ -73,11 +70,7 @@ export default function RegisterForm({ submitAction, formParams }: Props) {
           label={'Email'}
           variant={'bordered'}
           isInvalid={!!errors.email}
-          {...register('email', {
-            required: true,
-            maxLength: 30,
-            pattern: /^\S+@\S+$/i,
-          })}
+          {...register('email')}
           endContent={<CiMail className={endIconInputClasses} />}
         />
         <Spacer y={4} />
@@ -86,11 +79,7 @@ export default function RegisterForm({ submitAction, formParams }: Props) {
           label={'Password'}
           variant={'bordered'}
           isInvalid={!!errors.password}
-          {...register('password', {
-            required: true,
-            maxLength: 30,
-            minLength: 6,
-          })}
+          {...register('password')}
           endContent={<MdPassword className={endIconInputClasses} />}
         />
         <Spacer y={4} />
@@ -99,11 +88,7 @@ export default function RegisterForm({ submitAction, formParams }: Props) {
           label={'Confirm password'}
           variant={'bordered'}
           isInvalid={!!errors.confirmPassword}
-          {...register('confirmPassword', {
-            required: true,
-            maxLength: 30,
-            minLength: 6,
-          })}
+          {...register('confirmPassword')}
           endContent={<MdPassword className={endIconInputClasses} />}
         />
       </div>

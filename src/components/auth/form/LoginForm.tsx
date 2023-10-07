@@ -55,9 +55,7 @@ export default function LoginForm({ formParams }: Props) {
           label={'Email'}
           variant={'bordered'}
           isInvalid={!!errors.email}
-          {...register('email', {
-            required: true,
-          })}
+          {...register('email')}
           endContent={<CiMail className={endIconInputClasses} />}
         />
         <Spacer y={4} />
@@ -66,9 +64,7 @@ export default function LoginForm({ formParams }: Props) {
           label={'Password'}
           variant={'bordered'}
           isInvalid={!!errors.password}
-          {...register('password', {
-            required: true,
-          })}
+          {...register('password')}
           endContent={<MdPassword className={endIconInputClasses} />}
         />
       </div>
