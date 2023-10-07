@@ -34,6 +34,15 @@ yarn-error.log*
 *.tsbuildinfo
 types/next-env.d.ts
 
+# idea
+/.vscode/
 docs
 .idea
 /prisma/migrations
+
+# dotenv-vault
+.env.me
+.flaskenv*
+!.env.project
+!.env.vault
+
