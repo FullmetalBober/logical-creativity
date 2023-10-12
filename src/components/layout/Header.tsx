@@ -11,6 +11,11 @@ const Header = () => {
         </SPALink>
       </NavbarBrand>
       <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+          <NavbarItem>
+              <SPALink href='/notes' aria-current='page'>
+                  Notebook
+              </SPALink>
+          </NavbarItem>
         <NavbarItem isActive>
           <SPALink href='/new-test' aria-current='page'>
             Create new test
