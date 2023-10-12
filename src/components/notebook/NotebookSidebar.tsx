@@ -1,16 +1,26 @@
+'use client'
+
 import NotebookItem from './NotebookItem';
 import { TNote } from '@/app/notes/notes';
+import {Listbox, ListboxItem} from "@nextui-org/listbox";
+import {ListboxWrapper} from "./ListboxWrapper";
 
 type Props = { notes: TNote[] };
 
-function NotebookSidebar(props: Props) {
+export default function NotebookSidebar(props: Props) {
   return (
-    <div>
-      {props.notes.map((note) => (
-        <NotebookItem key={note.id} note={note}></NotebookItem>
-      ))}
+    <>
+      <ListboxWrapper>
+        <Listbox>
+          {props.notes.map((note) => (
+              <ListboxItem key={note.id}><NotebookItem key={note.id} note={note} ></NotebookItem></ListboxItem>
+          ))}
+        </Listbox>
+      </ListboxWrapper>
+      <div>
+
     </div>
+    </>
+
   );
 }
-
-export default NotebookSidebar;

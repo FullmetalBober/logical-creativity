@@ -2,6 +2,7 @@
 
 import { useNoteContext } from '@/context/note-context';
 import { TNote } from '@/app/notes/notes';
+import {Button} from "@nextui-org/button";
 
 type Props = { note: TNote };
 
@@ -10,9 +11,9 @@ function NotebookItem({ note }: Props) {
 
   const setNoteHandler = () => setNote(note);
   return (
-    <button className='notebookItem' onClick={setNoteHandler}>
+    <Button radius="sm" className='notebookItem' onClick={setNoteHandler}>
       {note.title}
-    </button>
+    </Button>
   );
 }
 

@@ -6,7 +6,7 @@ type Props = { notes: TNote[] };
 
 function NotebookBody(props: Props) {
   return (
-    <section className='notebookBody'>
+    <section className='notebookBody bg-primary-500'>
       <NotebookSidebar notes={props.notes}></NotebookSidebar>
       <NotebookTextarea />
     </section>
