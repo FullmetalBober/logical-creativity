@@ -36,7 +36,7 @@ export async function upsertTest(data: TTestSchema) {
 
     const session = await getServerSession(authOptions);
     if (!session) return { error: 'User not found' };
-    const userId = session.user.id;
+    const userId = +session.user.id;
 
     const upsertData = getUpsertTestData(data, userId);
 
