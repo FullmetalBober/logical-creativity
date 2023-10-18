@@ -81,40 +81,29 @@ export const authOptions: NextAuthOptions = {
 
       return token;
     },
-    //   signIn: async ({ user, account, profile }) => {
-    //     if (account?.provider === 'credentials') return true;
-    //
-    //     try {
-    //       console.log(user);
-    //       console.log(account);
-    //       console.log(profile);
-    //
-    //       if (!profile?.email || !profile?.name || !profile?.image) return false;
-    //
-    //       const isUserExist = await prisma.user.findFirst({
-    //         where: {
-    //           email: profile?.email,
-    //         },
-    //       });
-    //
-    //       if (isUserExist) return false;
-    //
-    //       // if (!isUserExist)
-    //       //   await prisma.user.create({
-    //       //     data: {
-    //       //       email: profile.email,
-    //       //       fullName: profile.name,
-    //       //       image: profile.image,
-    //       //       password: "",
-    //       //     },
-    //       //   });
-    //
-    //       return true;
-    //     } catch (error) {
-    //       console.log('Error: ', error);
-    //       return false;
-    //     }
-    //   },
+    signIn: async ({ user, account, profile }) => {
+      if (account?.provider === 'credentials') return true;
+      console.log(user);
+      console.log(account);
+      console.log(profile);
+      try {
+        if (!profile?.email || !profile?.name || !profile?.image) return false;
+
+        // await prisma.user.create({
+        //   data: {
+        //     email: profile.email,
+        //     fullName: profile.name,
+        //     image: profile.image,
+        //     password: '',
+        //   },
+        // });
+
+        return true;
+      } catch (error) {
+        console.log('Error: ', error);
+        return false;
+      }
+    },
   },
   pages: {
     signIn: '/auth/login',
