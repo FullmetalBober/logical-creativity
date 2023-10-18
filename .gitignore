@@ -25,22 +25,22 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env.*
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+types/next-env.d.ts
 
 # idea
-/docs/
-/.idea/
 /.vscode/
+docs
+.idea
+/prisma/migrations
 
 # dotenv-vault
-.env.me
 .flaskenv*
 !.env.project
 !.env.vault
