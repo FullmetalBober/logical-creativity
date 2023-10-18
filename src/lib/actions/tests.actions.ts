@@ -1,9 +1,11 @@
 'use server';
 
-import { prisma } from '@/db';
+import { getServerSession } from 'next-auth';
+import { prisma } from '@/lib/db';
 import { TTestSchema, testSchema } from '@/schemas/test';
 import { getErrorMessage } from '@/utils/error';
 import { getUpsertTestData } from '@/utils/testDataPrepare';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 export async function getTest(id: string | number) {
   try {
@@ -30,9 +32,13 @@ export async function getTest(id: string | number) {
 
 export async function upsertTest(data: TTestSchema) {
   try {
-    const validatedData = testSchema.parse(data);
+    data = testSchema.parse(data);
 
-    const upsertData = getUpsertTestData(validatedData);
+    const session = await getServerSession(authOptions);
+    if (!session) return { error: 'User not found' };
+    const userId = session.user.id;
+
+    const upsertData = getUpsertTestData(data, userId);
 
     await prisma.test.upsert(upsertData);
   } catch (error) {

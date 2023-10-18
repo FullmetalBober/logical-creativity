@@ -7,7 +7,7 @@ import { useForm, UseFormProps } from 'react-hook-form';
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import toast from 'react-hot-toast';
-import { upsertTest } from '@/actions/tests.actions';
+import { upsertTest } from '@/lib/actions/tests.actions';
 import QuestionsInputs from './QuestionsInputs';
 
 type Props = {

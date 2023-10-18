@@ -1,12 +1,13 @@
 import { TTestSchema, TQuestionSchema, TAnswerSchema } from '@/schemas/test';
 
-export const getUpsertTestData = (data: TTestSchema) => ({
+export const getUpsertTestData = (data: TTestSchema, userId: number) => ({
   where: {
     id: data.id || -1,
   },
   create: {
     ...data,
     questions: getCreateQuestionsData(data.questions),
+    userId: userId,
   },
   update: {
     ...data,

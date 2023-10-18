@@ -1,5 +1,5 @@
 import FormTest from '@/components/test/FormTest';
-import { getTest } from '@/actions/tests.actions';
+import { getTest } from '@/lib/actions/tests.actions';
 
 type Props = {
   params: {
