@@ -2,7 +2,8 @@
 import React, {useState} from "react";
 import UniversalHeader from "@/components/layout/UniversalHeader";
 import Footer from "@/components/layout/Footer";
-import "../styles/App.css"
+import "../styles/App.css";
+import config from "../../tailwind.config";
 
 export default function Home() {
   const [theme, setTheme] = useState("");
@@ -22,15 +23,12 @@ export default function Home() {
                   Themes
                 </summary>
                 <ul className="p-2 bg-base-100">
-                  <li onClick={() => setTheme("light")}><a>Light</a></li>
-                  <li onClick={() => setTheme("night")}><a>Night</a></li>
-                  <li onClick={() => setTheme("cupcake")}><a>Cupcake</a></li>
-                  <li onClick={() => setTheme("forest")}><a>Forest</a></li>
-                  <li onClick={() => setTheme("black")}><a>Black</a></li>
-                  <li onClick={() => setTheme("dracula")}><a>Dracula</a></li>
-                  <li onClick={() => setTheme("synthwave")}><a>Synthwave</a></li>
-                  <li onClick={() => setTheme("coffee")}><a>Coffee</a></li>
-                  <li onClick={() => setTheme("winter")}><a>Winter</a></li>
+                  {config.daisyui.themes.map((t: String) => {
+                    return (
+                        <li onClick={() => setTheme(t.toString())} key={t.toString()}><a>{t}</a></li>
+                    );
+                  })
+                  }
                 </ul>
               </details>
             </div>
