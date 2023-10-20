@@ -20,8 +20,8 @@ const UniversalHeader = (props) => {
                                 More
                             </summary>
                             <ul className="p-2 bg-base-100">
-                                <li><a>Link 1</a></li>
-                                <li><a>Link 2</a></li>
+                                <li><a>Log in</a></li>
+                                <li><a>Register</a></li>
                             </ul>
                         </details>
                     </li>
