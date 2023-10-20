@@ -2,6 +2,7 @@
 import React, {useState, Suspense, useEffect} from "react";
 import UniversalHeader from "@/components/layout/UniversalHeader";
 import Footer from "@/components/layout/Footer";
+import ListExample from "@/components/layout/ListExample";
 import "../styles/App.css";
 import config from "../../tailwind.config";
 
@@ -77,6 +78,7 @@ export default function Home() {
                   </div>
               </div>
           </dialog>
+          <ListExample />
           {/*<Suspense fallback={<span className="loading loading-spinner loading-lg"></span>}>*/}
 
           {/*</Suspense>*/}
