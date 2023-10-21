@@ -1,55 +1,62 @@
 import { useState, useEffect } from 'react';
 import { CardType, cardColors, shuffle } from '@/app/card-game/cards';
-import { CardThing } from '@/components/cardGame/Card';
+import { Card } from '@/components/cardGame/Card';
 
-type boardProps = {
-  endGame: () => void;
-};
-
-export default function Board({endGame}: boardProps) {
-  const [openedCard, setOpenedCard] = useState<CardType>();
-  const [allCards, setAllCards] = useState(
+export default function Board() {
+  const [firstOpened, setFirstOpened] = useState<CardType>();
+  const [secondOpened, setSecondOpened] = useState<CardType>();
+  const [foundCount, setFoundCount] = useState(0);
+  const [cards, setCards] = useState(
     shuffle(
       [...cardColors, ...cardColors].map((item, index) => ({
         id: index,
         color: item,
-        isOpened: false,
         isFound: false,
       })),
     ),
   );
 
-  useEffect(()=> {
-    const isUnfound = allCards.some(el => el.isFound == false);
-    if(!isUnfound) endGame();
-  }, [allCards])
+  const closeCards = () => {
+    setFirstOpened(undefined);
+    setSecondOpened(undefined);
+  }
 
-  function handleOpenedCard(item: CardType) {
-    setAllCards((prevState) => prevState.map((el) => (el.id === item.id ? { ...el, isOpened: true } : el)));
+  function handleOpeningCard(item: CardType) {
+    if(!firstOpened) setFirstOpened(item);
+    else if(firstOpened && !secondOpened && item.id != firstOpened.id) setSecondOpened(item);
+  }
 
-    if (!openedCard) setOpenedCard(item);
-    else {
-      if (openedCard.color === item.color)
-        setAllCards((prevState) =>
-          prevState.map((el) => (el.id === openedCard.id || el.id === item.id ? { ...el, isFound: true } : el)),
-        );
-      else
-        setTimeout(() => {
-          setAllCards((prevState) =>
-            prevState.map((el) => (el.id === openedCard.id || el.id === item.id ? { ...el, isOpened: false } : el)),
-          );
-        }, 1000);
-        
-      setOpenedCard(undefined);
-    }
+  if(firstOpened && secondOpened){
+    if(firstOpened.color === secondOpened.color){
+      setCards((prevState) => prevState.map((el) =>
+        el.id === firstOpened.id || el.id === secondOpened.id ? {...el, isFound: true} : el  
+      ));        
+      setFoundCount(prevState => prevState += 1);
+
+      closeCards();
+    } 
+    else
+      setTimeout(() => {closeCards()}, 1000);
+  }
+
+  const setIsOpened = (card: CardType) => {
+    return card.id === firstOpened?.id || card.id === secondOpened?.id || card.isFound
+    ? true : false 
   }
   
-
   return (
-    <div className='grid grid-cols-4 grid-rows-4 gap-4 py-4'>
-      {allCards.map((card) => (
-        <CardThing onOpenCard={handleOpenedCard} key={card.id} {...card} />
-      ))}
-    </div>
+    <>
+      <div className='grid grid-cols-4 grid-rows-3 gap-4 py-4'>
+        {cards.map((card) => (
+          <Card 
+            handleOpening={handleOpeningCard} 
+            key={card.id} 
+            isOpened={setIsOpened(card)}
+            {...card} 
+          />
+        ))}
+      </div>
+      {foundCount === 6 && <p>Вітаємо з проходженням!</p>}
+    </>
   );
 }

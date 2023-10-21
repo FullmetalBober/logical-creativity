@@ -1,7 +1,6 @@
 export type CardType = {
   id: number;
   color: string;
-  isOpened: boolean;
   isFound: boolean;
 };
 
