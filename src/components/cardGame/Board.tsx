@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CardType, cardColors, shuffle } from '@/app/card-game/cards';
 import { Card } from '@/components/cardGame/Card';
+import { Timer } from '@/components/cardGame/Timer';
 
 export default function Board() {
   const [firstOpened, setFirstOpened] = useState<CardType>();
@@ -31,12 +32,12 @@ export default function Board() {
       setCards((prevState) => prevState.map((el) =>
         el.id === firstOpened.id || el.id === secondOpened.id ? {...el, isFound: true} : el  
       ));        
-      setFoundCount(prevState => prevState += 1);
+      setFoundCount((prevState) => prevState += 1);
 
       closeCards();
     } 
     else
-      setTimeout(() => {closeCards()}, 1000);
+      setTimeout(() => {closeCards()}, 800);
   }
 
   const setIsOpened = (card: CardType) => {
@@ -56,7 +57,7 @@ export default function Board() {
           />
         ))}
       </div>
-      {foundCount === 6 && <p>Вітаємо з проходженням!</p>}
+      <Timer stopGame={foundCount === 6}/>
     </>
   );
 }
