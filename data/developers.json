@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Oleksandr Parkhomenko",
+    "description": "Main Page",
+    "image": "Alex.jpg"
+  },
+  {
+    "name": "Sophie Pishchuk",
+    "description": "Notebook",
+    "image": "Sophie.jpg"
+  },
+  {
+    "name": "Alina Radkivska",
+    "description": "Game Logic",
+    "image": "Alivka.jpg"
+  },
+  {
+    "name": "Evgeniy Fishchuk",
+    "description": "Statistics",
+    "image": "Jackson.jpg"
+  },
+  {
+    "name": "Andriy Babushko",
+    "description": "Registration & Authorization",
+    "image": "Andriy.jpg"
+  },
+  {
+    "name": "Vlad Mankivskiy",
+    "description": "Project Organizer",
+    "image": "Vlad.jpg"
+  }
+]

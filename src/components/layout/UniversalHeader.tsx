@@ -1,5 +1,6 @@
 'use client'
 import React from "react";
+import SiteVisitTimer from "@/components/layout/SiteVisitTimer";
 
 // @ts-ignore
 const UniversalHeader = (props) => {
@@ -12,19 +13,20 @@ const UniversalHeader = (props) => {
                 <a className="btn btn-ghost normal-case text-xl">About</a>
             </div>
             <div className="flex-none">
-                <ul className="menu menu-horizontal px-1">
-                    <li><a className="btn btn-ghost normal-case text-xl">Writer</a></li>
+                <ul className="menu menu-horizontal px-8">
                     <li>
                         <details>
                             <summary className="btn btn-ghost normal-case text-xl">
-                                More
+                                Statistics
                             </summary>
                             <ul className="p-2 bg-base-100">
-                                <li><a>Log in</a></li>
-                                <li><a>Register</a></li>
+                                <li>
+                                    <SiteVisitTimer />
+                                </li>
                             </ul>
                         </details>
                     </li>
+                    <li><a className="btn btn-ghost normal-case text-xl">Writer</a></li>
                 </ul>
             </div>
         </div>

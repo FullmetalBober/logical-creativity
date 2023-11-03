@@ -1,9 +1,10 @@
 'use client';
-import React, {useState, Suspense, useEffect} from "react";
+import React, {useState, Suspense, useEffect, useRef} from "react";
 import UniversalHeader from "@/components/layout/UniversalHeader";
 import Footer from "@/components/layout/Footer";
 import ListExample from "@/components/layout/ListExample";
 import UserInfo from "@/components/layout/UserInfo";
+import Developers from "@/components/layout/Developers";
 import "../styles/App.css";
 import config from "../../tailwind.config";
 
@@ -17,7 +18,9 @@ export default function Home() {
   useEffect(() => {
       // @ts-ignore
       !isOpen ? document.getElementById("my_modal_1").showModal() : null;
+
   }, [isOpen, user]);
+
     let setUserType = (userType: String, id: String) => {
         let el = document.getElementsByClassName("py-4");
         el[parseInt(id.toString())].classList.add("user-type-active");
@@ -79,10 +82,14 @@ export default function Home() {
                   </div>
               </div>
           </dialog>
-          <ListExample />
-          <Suspense fallback={<span className="loading loading-spinner loading-lg"></span>}>
-            <UserInfo />
-          </Suspense>
+          {/*<ListExample />*/}
+          {/*<Suspense fallback={<span className="loading loading-spinner loading-lg"></span>}>*/}
+          {/*  <UserInfo />*/}
+          {/*</Suspense>*/}
+          <div data-theme={theme} style={{padding: 100}}>
+              <h1 style={{textAlign: "center", fontSize: 36}}>Our Team</h1>
+              <Developers />
+          </div>
         <Footer theme={theme} />
       </main>
   );
