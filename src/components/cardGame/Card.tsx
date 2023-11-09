@@ -21,8 +21,8 @@ export function Card(props: cardProps) {
       }
       onClick={handleClick}
     >
-      {!isOpened && <div className='text-6xl'>?</div>}
-      {isOpened && <div className='text-2xl'>{isFound ? color + " ✓" : color}</div>}
+      {!isOpened && <p className='text-6xl'>?</p>}
+      {isOpened && <p className='text-2xl'>{isFound ? color + " ✓" : color}</p>}
     </div>
   );
 }

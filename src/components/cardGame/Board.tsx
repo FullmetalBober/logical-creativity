@@ -36,13 +36,11 @@ export default function Board() {
 
       closeCards();
     } 
-    else
-      setTimeout(() => {closeCards()}, 800);
+    else setTimeout(() => closeCards(), 800);
   }
 
   const setIsOpened = (card: CardType) => {
     return card.id === firstOpened?.id || card.id === secondOpened?.id || card.isFound
-    ? true : false 
   }
   
   return (
