@@ -29,6 +29,9 @@ const Header = ({ session }: HeaderProps) => {
               Create new test
             </SPALink>
           </NavbarItem>
+          <NavbarItem className='hidden gap-4 sm:flex'>
+            <SPALink href='/card-game'>Play CardGame</SPALink>
+          </NavbarItem>
         </NavbarContent>
       )}
       <NavbarContent justify='end'>
