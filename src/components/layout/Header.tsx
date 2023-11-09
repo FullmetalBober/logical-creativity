@@ -1,10 +1,15 @@
-'use client';
-
-import { Button } from '@nextui-org/button';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar';
 import SPALink from '../ui/SPALink';
+import LoginButton from '@/components/auth/buttons/LoginButton';
+import { User } from '@nextui-org/user';
+import { Session } from 'next-auth';
+import RegisterButton from '@/components/auth/buttons/RegisterButton';
 
-const Header = () => {
+type HeaderProps = {
+  session: Session | null;
+};
+
+const Header = ({ session }: HeaderProps) => {
   return (
     <Navbar shouldHideOnScroll>
       <NavbarBrand>
@@ -12,27 +17,40 @@ const Header = () => {
           Logic Brain
         </SPALink>
       </NavbarBrand>
-      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-        <NavbarItem isActive>
-          <SPALink href='/new-test' aria-current='page'>
-            Create new test
-          </SPALink>
-        </NavbarItem>
-        <NavbarItem className='hidden gap-4 sm:flex'>
-          <SPALink href='/card-game'>Play CardGame</SPALink>
-        </NavbarItem>
-      </NavbarContent>
+      {session?.user && (
+        <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+          <NavbarItem>
+            <SPALink href='/notes' aria-current='page'>
+              Notebook
+            </SPALink>
+          </NavbarItem>
+          <NavbarItem isActive>
+            <SPALink href='/new-test' aria-current='page'>
+              Create new test
+            </SPALink>
+          </NavbarItem>
+        </NavbarContent>
+      )}
       <NavbarContent justify='end'>
-        <NavbarItem className='hidden lg:flex'>
-          <SPALink href='/auth/login'>Login</SPALink>
-        </NavbarItem>
         <NavbarItem>
-          <SPALink href='/auth/signUp'>
-            <Button color='primary' variant='flat'>
-              Sign Up
-            </Button>
-          </SPALink>
+          {session && session.user && session.user.image != null && (
+            <User
+              name={session.user.name}
+              description={session.user.email}
+              avatarProps={{
+                src: session.user.image,
+              }}
+            />
+          )}
         </NavbarItem>
+        <NavbarItem className='hidden lg:flex'>
+          <LoginButton session={session} />
+        </NavbarItem>
+        {!session && (
+          <NavbarItem className='hidden lg:flex'>
+            <RegisterButton session={session} />
+          </NavbarItem>
+        )}
       </NavbarContent>
     </Navbar>
   );
