@@ -17,23 +17,23 @@ const Header = ({ session }: HeaderProps) => {
           Logic Brain
         </SPALink>
       </NavbarBrand>
-      {session?.user && (
-        <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-          <NavbarItem>
-            <SPALink href='/notes' aria-current='page'>
-              Notebook
-            </SPALink>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <SPALink href='/new-test' aria-current='page'>
-              Create new test
-            </SPALink>
-          </NavbarItem>
-          <NavbarItem className='hidden gap-4 sm:flex'>
-            <SPALink href='/card-game'>Play CardGame</SPALink>
-          </NavbarItem>
-        </NavbarContent>
-      )}
+      {/* {session?.user && ( */}
+      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+        <NavbarItem>
+          <SPALink href='/notes' aria-current='page'>
+            Notebook
+          </SPALink>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <SPALink href='/new-test' aria-current='page'>
+            Create new test
+          </SPALink>
+        </NavbarItem>
+        <NavbarItem className='hidden gap-4 sm:flex'>
+          <SPALink href='/card-game'>Play CardGame</SPALink>
+        </NavbarItem>
+      </NavbarContent>
+      {/* )} */}
       <NavbarContent justify='end'>
         <NavbarItem>
           {session && session.user && session.user.image != null && (
