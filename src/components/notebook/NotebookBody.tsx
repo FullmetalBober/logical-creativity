@@ -1,14 +1,15 @@
+'use client';
+
+import { useNoteContext } from '@/context/note-context';
 import NotebookSidebar from './NotebookSidebar';
 import NotebookTextarea from './NotebookTextarea';
-import { TNote } from '@/app/notes/notes';
 
-type Props = { notes: TNote[] };
-
-function NotebookBody(props: Props) {
+function NotebookBody() {
+  const { note } = useNoteContext();
   return (
-    <section className='notebookBody bg-primary-500'>
-      <NotebookSidebar notes={props.notes}></NotebookSidebar>
-      <NotebookTextarea />
+    <section className='notebookBody flex'>
+      <NotebookSidebar />
+      {note && <NotebookTextarea />}
     </section>
   );
 }

@@ -1,26 +1,26 @@
-'use client'
+'use client';
 
+import { Listbox, ListboxItem } from '@nextui-org/listbox';
+import { Spinner } from '@nextui-org/spinner';
+import { TNoteSchema } from '@/schemas/note';
 import NotebookItem from './NotebookItem';
-import { TNote } from '@/app/notes/notes';
-import {Listbox, ListboxItem} from "@nextui-org/listbox";
-import {ListboxWrapper} from "./ListboxWrapper";
+import { ListboxWrapper } from './ListboxWrapper';
+import useFetch from '../../hooks/useFetch';
 
-type Props = { notes: TNote[] };
+export default function NotebookSidebar() {
+  const { response, isLoading } = useFetch<{ posts: TNoteSchema[] }>('https://dummyjson.com/posts?limit=5');
+  const { posts: notes } = response || { posts: [] };
 
-export default function NotebookSidebar(props: Props) {
   return (
-    <>
-      <ListboxWrapper>
-        <Listbox>
-          {props.notes.map((note) => (
-              <ListboxItem key={note.id}><NotebookItem key={note.id} note={note} ></NotebookItem></ListboxItem>
-          ))}
-        </Listbox>
-      </ListboxWrapper>
-      <div>
-
-    </div>
-    </>
-
+    <ListboxWrapper>
+      {isLoading && <Spinner />}
+      <Listbox aria-label='Notebook List'>
+        {notes.map((note) => (
+          <ListboxItem key={note.id} textValue={note.title}>
+            <NotebookItem note={note} />
+          </ListboxItem>
+        ))}
+      </Listbox>
+    </ListboxWrapper>
   );
 }

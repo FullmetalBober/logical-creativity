@@ -1,21 +1,21 @@
 'use client';
 
 import { createContext, useState, useContext } from 'react';
-import { TNote } from '../app/notes/notes';
+import { TNoteSchema } from '@/schemas/note';
 
 type Props = {
   children: React.ReactNode;
 };
 
 type TNoteContext = {
-  note?: TNote;
-  setNote: React.Dispatch<React.SetStateAction<TNote | undefined>>;
+  note?: TNoteSchema;
+  setNote: React.Dispatch<React.SetStateAction<TNoteSchema | undefined>>;
 };
 
 export const NoteContext = createContext<TNoteContext | null>(null);
 
 export const NoteContextProvider = ({ children }: Props) => {
-  const [note, setNote] = useState<TNote>();
+  const [note, setNote] = useState<TNoteSchema>();
 
   return <NoteContext.Provider value={{ note, setNote }}>{children}</NoteContext.Provider>;
 };
