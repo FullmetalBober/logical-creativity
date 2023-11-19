@@ -11,7 +11,7 @@ function NotebookItem({ note }: Props) {
 
   const setNoteHandler = () => setNote(note);
   return (
-    <Button radius='sm' className='notebookItem' onClick={setNoteHandler} fullWidth={true}>
+    <Button radius='sm' className='notebookItem' onClick={setNoteHandler} fullWidth={true} color={note.color}>
       {note.title}
     </Button>
   );

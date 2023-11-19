@@ -1,19 +1,18 @@
 'use client';
 
 import { Listbox, ListboxItem } from '@nextui-org/listbox';
-import { Spinner } from '@nextui-org/spinner';
-import { TNoteSchema } from '@/schemas/note';
 import NotebookItem from './NotebookItem';
 import { ListboxWrapper } from './ListboxWrapper';
-import useFetch from '../../hooks/useFetch';
+import { useNoteContext } from '@/context/note-context';
 
 export default function NotebookSidebar() {
-  const { response, isLoading } = useFetch<{ posts: TNoteSchema[] }>('https://dummyjson.com/posts?limit=5');
-  const { posts: notes } = response || { posts: [] };
+  const { notes, createNoteObj } = useNoteContext();
+  notes.sort((a, b) => (a.isFavorite && !b.isFavorite ? -1 : !a.isFavorite && b.isFavorite ? 1 : 0));
 
   return (
     <ListboxWrapper>
-      {isLoading && <Spinner />}
+      <NotebookItem note={createNoteObj} />
+
       <Listbox aria-label='Notebook List'>
         {notes.map((note) => (
           <ListboxItem key={note.id} textValue={note.title}>

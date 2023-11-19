@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import useFetch from '@/hooks/useFetch';
 import { TNoteSchema } from '@/schemas/note';
 
 type Props = {
@@ -8,16 +9,47 @@ type Props = {
 };
 
 type TNoteContext = {
+  notes: TNoteSchema[];
+  setNotes: React.Dispatch<React.SetStateAction<TNoteSchema[]>>;
   note?: TNoteSchema;
   setNote: React.Dispatch<React.SetStateAction<TNoteSchema | undefined>>;
+  createNoteObj: TNoteSchema;
+  pushNote: (note: TNoteSchema) => void;
 };
 
 export const NoteContext = createContext<TNoteContext | null>(null);
 
 export const NoteContextProvider = ({ children }: Props) => {
+  const { response } = useFetch<{ posts: TNoteSchema[] }>('https://dummyjson.com/posts?limit=5');
+  const [notes, setNotes] = useState<TNoteSchema[]>([]);
   const [note, setNote] = useState<TNoteSchema>();
 
-  return <NoteContext.Provider value={{ note, setNote }}>{children}</NoteContext.Provider>;
+  const createNoteObj: TNoteSchema = {
+    id: -1,
+    title: 'Create a new note',
+    body: '',
+    color: 'primary',
+    isFavorite: true,
+  };
+
+  const pushNote = (note: TNoteSchema) => {
+    console.log(note);
+    setNotes((prev) => [...prev, note]);
+    setNote(note);
+  };
+
+  useEffect(() => {
+    if (response) {
+      const { posts: notes } = response;
+      setNotes(notes);
+    }
+  }, [response]);
+
+  return (
+    <NoteContext.Provider value={{ notes, setNotes, note, setNote, createNoteObj, pushNote }}>
+      {children}
+    </NoteContext.Provider>
+  );
 };
 
 export const useNoteContext = () => {
