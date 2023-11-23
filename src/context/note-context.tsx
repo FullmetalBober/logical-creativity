@@ -15,12 +15,13 @@ type TNoteContext = {
   setNote: React.Dispatch<React.SetStateAction<TNoteSchema | undefined>>;
   createNoteObj: TNoteSchema;
   pushNote: (note: TNoteSchema) => void;
+  isLoading: boolean;
 };
 
 export const NoteContext = createContext<TNoteContext | null>(null);
 
 export const NoteContextProvider = ({ children }: Props) => {
-  const { response } = useFetch<{ posts: TNoteSchema[] }>('https://dummyjson.com/posts?limit=5');
+  const { response, isLoading } = useFetch<{ posts: TNoteSchema[] }>('https://dummyjson.com/posts?limit=5');
   const [notes, setNotes] = useState<TNoteSchema[]>([]);
   const [note, setNote] = useState<TNoteSchema>();
 
@@ -46,7 +47,7 @@ export const NoteContextProvider = ({ children }: Props) => {
   }, [response]);
 
   return (
-    <NoteContext.Provider value={{ notes, setNotes, note, setNote, createNoteObj, pushNote }}>
+    <NoteContext.Provider value={{ notes, setNotes, note, setNote, createNoteObj, pushNote, isLoading }}>
       {children}
     </NoteContext.Provider>
   );

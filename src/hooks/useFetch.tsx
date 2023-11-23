@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 export default function useFetch<T>(url: string, options: RequestInit = {}) {
   const [response, setResponse] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const fetchRef = useRef<AbortController>();
 
   useEffect(() => {

@@ -1,18 +1,19 @@
 'use client';
 
 import { Listbox, ListboxItem } from '@nextui-org/listbox';
+import { Spinner } from '@nextui-org/spinner';
 import NotebookItem from './NotebookItem';
 import { ListboxWrapper } from './ListboxWrapper';
 import { useNoteContext } from '@/context/note-context';
 
 export default function NotebookSidebar() {
-  const { notes, createNoteObj } = useNoteContext();
+  const { notes, createNoteObj, isLoading } = useNoteContext();
   notes.sort((a, b) => (a.isFavorite && !b.isFavorite ? -1 : !a.isFavorite && b.isFavorite ? 1 : 0));
-
+  console.log(isLoading);
   return (
     <ListboxWrapper>
       <NotebookItem note={createNoteObj} />
-
+      {isLoading && <Spinner />}
       <Listbox aria-label='Notebook List'>
         {notes.map((note) => (
           <ListboxItem key={note.id} textValue={note.title}>
