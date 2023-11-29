@@ -1,15 +1,16 @@
 'use client';
 
 import { Button } from '@nextui-org/button';
-import { useNoteContext } from '@/context/note-context';
+import { useAppDispatch } from '@/store';
+import { notebookActions } from '@/store/notebook-slice';
 import { TNoteSchema } from '@/schemas/note';
 
 type Props = { note: TNoteSchema };
 
 function NotebookItem({ note }: Props) {
-  const { setNote } = useNoteContext();
+  const dispatch = useAppDispatch();
 
-  const setNoteHandler = () => setNote(note);
+  const setNoteHandler = () => dispatch(notebookActions.selectNote(note));
   return (
     <Button radius='sm' className='notebookItem' onClick={setNoteHandler} fullWidth={true} color={note.color}>
       {note.title}

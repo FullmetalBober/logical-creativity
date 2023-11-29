@@ -2,11 +2,12 @@
 
 import { Card, CardHeader, CardBody } from '@nextui-org/card';
 import { Divider } from '@nextui-org/divider';
-import { useNoteContext } from '@/context/note-context';
+import { useAppSelector } from '@/store';
 import NotebookCreate from './NotebookCreate';
+import { createNoteObj } from '@/constants';
 
 function NotebookTextarea() {
-  const { note, createNoteObj } = useNoteContext();
+  const { note } = useAppSelector((state) => state.notebook);
 
   return (
     <Card className='flex-1'>

@@ -6,12 +6,13 @@ import { Button } from '@nextui-org/button';
 import { Input, Textarea } from '@nextui-org/input';
 import { Autocomplete, AutocompleteItem } from '@nextui-org/autocomplete';
 import { Checkbox } from '@nextui-org/checkbox';
-import { useNoteContext } from '@/context/note-context';
+import { useAppDispatch } from '@/store';
+import { notebookActions } from '@/store/notebook-slice';
 import { noteSchema, TNoteSchema } from '@/schemas/note';
 import { colors } from '@/constants';
 
 function NotebookCreate() {
-  const { pushNote } = useNoteContext();
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -25,7 +26,7 @@ function NotebookCreate() {
   });
 
   const submitHandler = (data: TNoteSchema) => {
-    pushNote(data);
+    dispatch(notebookActions.addNote(data));
     reset();
   };
 
