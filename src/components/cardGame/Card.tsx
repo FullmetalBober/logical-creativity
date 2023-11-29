@@ -1,12 +1,13 @@
+import React from 'react';
 import { CardType } from '@/app/card-game/cards';
-import './card.css';
+import { StyledCard } from './StyledCard';
 
 type cardProps = CardType & {
   handleOpening: (item: CardType) => void;
   isOpened: boolean;
 };
 
-export function Card(props: cardProps) {
+export const Card: React.FC<cardProps> = (props: cardProps) => {
   const { color, isFound, handleOpening, isOpened } = props;
 
   function handleClick() {
@@ -14,15 +15,12 @@ export function Card(props: cardProps) {
   }
 
   return (
-    <div
-      className={
-        `card h-24 w-24 content-center items-center 
-        ${isOpened ? color : 'bg-default-200'}`
-      }
+    <StyledCard
+      $bgColor={isOpened ? color : undefined}
       onClick={handleClick}
     >
       {!isOpened && <div className='text-6xl'>?</div>}
-      {isOpened && <div className='text-2xl'>{isFound ? color + " ✓" : color}</div>}
-    </div>
+      {isOpened && <div className='text-2xl'>{isFound ? color + ' ✓' : color}</div>}
+    </StyledCard>
   );
 }
