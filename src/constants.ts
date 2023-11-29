@@ -6,3 +6,5 @@ export const pageLinks = {
   login: '/auth/login',
   register: '/auth/register',
 };
+
+export const colors = ['default', 'primary', 'secondary', 'success', 'warning', 'danger'] as const;
