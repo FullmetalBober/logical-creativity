@@ -1,12 +1,13 @@
 'use client';
-import React, {useState, Suspense, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import UniversalHeader from "@/components/layout/UniversalHeader";
 import Footer from "@/components/layout/Footer";
-import ListExample from "@/components/layout/ListExample";
-import UserInfo from "@/components/layout/UserInfo";
+import Notification from "@/components/layout/Notification";
 import Developers from "@/components/layout/Developers";
 import "../styles/App.css";
 import config from "../../tailwind.config";
+import ReactDOM from "react-dom";
+import {clearTimeout} from "timers";
 
 export default function Home() {
   const theme = localStorage.getItem("theme");
@@ -14,12 +15,27 @@ export default function Home() {
   const [themeState, setThemeState] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState("guest");
+  const [showNotification, setShowNotification] = useState(false);
 
-  useEffect(() => {
-      // @ts-ignore
-      !isOpen ? document.getElementById("my_modal_1").showModal() : null;
+    const handleShowNotification = () => {
+        setShowNotification(true);
+    };
 
-  }, [isOpen, user]);
+    const handleCloseNotification = () => {
+        setShowNotification(false);
+    };
+
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            handleShowNotification();
+        }, 1000);
+    }, [])
+
+  // useEffect(() => {
+  //     // @ts-ignore
+  //     !isOpen ? document.getElementById("my_modal_1").showModal() : null;
+  //
+  // }, [isOpen, user]);
 
     let setUserType = (userType: String, id: String) => {
         let el = document.getElementsByClassName("py-4");
@@ -41,7 +57,7 @@ export default function Home() {
     }
 
     return (
-      <main className="homePageMain">
+      <main className="homePageMain" id="main">
         <UniversalHeader theme={theme} />
         <div className="hero min-h-screen" data-theme={theme} style={{backgroundImage: `url("https://images.pexels.com/photos/3975590/pexels-photo-3975590.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")`}}>
             <div className="hero-overlay bg-opacity-60"></div>
@@ -80,17 +96,21 @@ export default function Home() {
                           <button className="btn">Close</button>
                       </form>
                   </div>
-              </div>
+            </div>
           </dialog>
-          {/*<ListExample />*/}
-          {/*<Suspense fallback={<span className="loading loading-spinner loading-lg"></span>}>*/}
-          {/*  <UserInfo />*/}
-          {/*</Suspense>*/}
           <div data-theme={theme} style={{padding: 100}}>
               <h1 style={{textAlign: "center", fontSize: 36}}>Our Team</h1>
               <Developers />
           </div>
         <Footer theme={theme} />
+          {/*Notification*/}
+          <div>
+              {showNotification &&
+                  ReactDOM.createPortal(
+                      <Notification message="Welcome! You have successfully entered as a guest" onClose={handleCloseNotification} />,
+                      document.body
+                  )}
+          </div>
       </main>
   );
 }
