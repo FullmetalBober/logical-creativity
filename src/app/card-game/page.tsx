@@ -1,23 +1,36 @@
 'use client';
 import { Button } from '@nextui-org/button';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Board from '@/components/cardGame/Board';
+import { useAppSelector, useAppDispatch } from '@/store';
+import { stopGame, startGame } from '@/store/board-slice';
+import { Timer } from '@/components/cardGame/Timer';
 
 export default function Home() {
-  const [gameRunning, setGameRunning] = useState(false);
+  const { gameRunning, foundCount } = useAppSelector((state) => state.board);
+  const dispatch = useAppDispatch();
 
-  function handleSetGameRunning() {
-    setGameRunning(prevState => !prevState);
+  useEffect(() => {
+    dispatch(stopGame(false));
+  }, [foundCount])
+
+
+  function handleClick() {
+    gameRunning ? dispatch(stopGame(true)) : dispatch(startGame())
   }
 
+  console.log(foundCount);
   return (
     <main className='flex flex-col items-center justify-center'>
       <p>
-        {!gameRunning && 'Зіграти в гру "Знайти пару"?'}
-        {gameRunning && 'Гра почалась, успіхів!'}
+        {!gameRunning && 'Would you like to play a card game?'}
+        {gameRunning && 'The game has started. Good luck!'}
       </p>
-      <Button className='m-4' onClick={handleSetGameRunning}>{gameRunning ? 'Завершити поточну гру' : 'Почати нову гру'}</Button>
-      {gameRunning && <Board />} 
+      <Button className='m-4' onClick={handleClick}>{gameRunning ? 'Finish the game' : 'Start a new game'}</Button>
+      {gameRunning &&
+        <Board />
+      }
+      <Timer stop={!gameRunning} />
     </main>
   );
 }

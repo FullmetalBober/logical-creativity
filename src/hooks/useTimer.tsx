@@ -16,10 +16,12 @@ export const useTimer = () => {
     () => (running ? setSeconds((seconds) => seconds + 1) : undefined),
     [running]
   );
+
   const start = () => setRunning(true);
   const stop = () => setRunning(false);
+  const reset = () => setSeconds(0);
 
   useSecondsInterval(tick);
 
-  return { running, seconds, start, stop };
+  return { running, seconds, start, stop, reset };
 };

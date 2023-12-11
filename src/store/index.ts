@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import notebookReducer from './notebook-slice';
+import boardReducer from './board-slice';
 
 const store = configureStore({
   reducer: {
     notebook: notebookReducer,
+    board: boardReducer,
   },
 });
 
