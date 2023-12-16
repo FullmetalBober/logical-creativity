@@ -24,13 +24,16 @@ const Header = ({ session }: HeaderProps) => {
             Notebook
           </SPALink>
         </NavbarItem>
-        <NavbarItem isActive>
+        <NavbarItem>
           <SPALink href='/new-test' aria-current='page'>
             Create new test
           </SPALink>
         </NavbarItem>
         <NavbarItem className='hidden gap-4 sm:flex'>
           <SPALink href='/card-game'>Play CardGame</SPALink>
+        </NavbarItem>
+        <NavbarItem className='hidden gap-4 sm:flex'>
+          <SPALink href='/pin-guess'>Guess the PIN</SPALink>
         </NavbarItem>
       </NavbarContent>
       {/* )} */}
