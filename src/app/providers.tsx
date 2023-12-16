@@ -3,7 +3,8 @@
 import React from 'react';
 import { NextUIProvider } from '@nextui-org/react';
 import { SessionProvider } from 'next-auth/react';
-import { NoteContextProvider } from '@/context/note-context';
+import { Provider as ReduxProvider } from 'react-redux';
+import store from '@/store';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ export default function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
       <NextUIProvider>
-        <NoteContextProvider>{children}</NoteContextProvider>
+        <ReduxProvider store={store}>{children}</ReduxProvider>
       </NextUIProvider>
     </SessionProvider>
   );

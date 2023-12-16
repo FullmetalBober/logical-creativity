@@ -1,23 +1,47 @@
 'use client';
 
-import { createContext, useState, useContext } from 'react';
-import { TNote } from '../app/notes/notes';
+import { createContext, useState, useContext, useEffect } from 'react';
+import useFetch from '@/hooks/useFetch';
+import { TNoteSchema } from '@/schemas/note';
 
 type Props = {
   children: React.ReactNode;
 };
 
 type TNoteContext = {
-  note?: TNote;
-  setNote: React.Dispatch<React.SetStateAction<TNote | undefined>>;
+  notes: TNoteSchema[];
+  setNotes: React.Dispatch<React.SetStateAction<TNoteSchema[]>>;
+  note?: TNoteSchema;
+  setNote: React.Dispatch<React.SetStateAction<TNoteSchema | undefined>>;
+  pushNote: (note: TNoteSchema) => void;
+  isLoading: boolean;
 };
 
 export const NoteContext = createContext<TNoteContext | null>(null);
 
 export const NoteContextProvider = ({ children }: Props) => {
-  const [note, setNote] = useState<TNote>();
+  const { response, isLoading } = useFetch<{ posts: TNoteSchema[] }>('https://dummyjson.com/posts?limit=5');
+  const [notes, setNotes] = useState<TNoteSchema[]>([]);
+  const [note, setNote] = useState<TNoteSchema>();
 
-  return <NoteContext.Provider value={{ note, setNote }}>{children}</NoteContext.Provider>;
+  const pushNote = (note: TNoteSchema) => {
+    console.log(note);
+    setNotes((prev) => [...prev, note]);
+    setNote(note);
+  };
+
+  useEffect(() => {
+    if (response) {
+      const { posts: notes } = response;
+      setNotes(notes);
+    }
+  }, [response]);
+
+  return (
+    <NoteContext.Provider value={{ notes, setNotes, note, setNote, pushNote, isLoading }}>
+      {children}
+    </NoteContext.Provider>
+  );
 };
 
 export const useNoteContext = () => {

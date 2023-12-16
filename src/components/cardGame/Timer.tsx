@@ -1,19 +1,26 @@
 import { useEffect } from 'react';
-import { useTimer } from '../hooks/useTimer';
+import { useTimer } from '../../hooks/useTimer';
 
-export function Timer(props: {stopGame: boolean}) {
-  const { seconds, running, start, stop } = useTimer();
-  
+export function Timer(props: { stop: boolean }) {
+  const { seconds, running, start, stop, reset } = useTimer();
+
   useEffect(() => {
-    start();
-  }, []);
+    if (!props.stop) {
+      reset()
+      start();
+    }
+  }, [props.stop]);
 
-  if(running && props.stopGame) stop();
+  if (running && props.stop) stop();
 
   return (
     <p>
-      {running && `Час проходження: ${seconds}c`}
-      {props.stopGame && `Вітаємо з проходженням за ${seconds}с!`}
+      {seconds != 0 &&
+        <>
+          {running && `Your game time: ${seconds}c`}
+          {props.stop && `The timer was stopped here: ${seconds}с`}
+        </>
+      }
     </p>
   )
 }

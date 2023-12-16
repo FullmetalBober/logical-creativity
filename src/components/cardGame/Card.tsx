@@ -1,28 +1,29 @@
+import React from 'react';
 import { CardType } from '@/app/card-game/cards';
-import './card.css';
+import { StyledCard } from './StyledCard';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { openCard } from '@/store/board-slice';
 
-type cardProps = CardType & {
-  handleOpening: (item: CardType) => void;
-  isOpened: boolean;
-};
-
-export function Card(props: cardProps) {
-  const { color, isFound, handleOpening, isOpened } = props;
+export function Card({ card }: { card: CardType }) {
+  const { color, isFound } = card;
+  const dispatch = useAppDispatch();
+  const { firstOpened, secondOpened } = useAppSelector((state) => state.board);
 
   function handleClick() {
-    handleOpening(props);
+    dispatch(openCard(card));
+  }
+
+  function checkIfOpened() {
+    return firstOpened?.id === card.id || secondOpened?.id === card.id || card.isFound
   }
 
   return (
-    <div
-      className={
-        `card h-24 w-24 content-center items-center 
-        ${isOpened ? color : 'bg-default-200'}`
-      }
+    <StyledCard
+      $bgColor={checkIfOpened() ? color : undefined}
       onClick={handleClick}
     >
-      {!isOpened && <div className='text-6xl'>?</div>}
-      {isOpened && <div className='text-2xl'>{isFound ? color + " ✓" : color}</div>}
-    </div>
+      {!checkIfOpened() && <div className='text-6xl'>?</div>}
+      {checkIfOpened() && <div className='text-2xl'>{isFound ? color + ' ✓' : color}</div>}
+    </StyledCard>
   );
 }
