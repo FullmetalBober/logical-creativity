@@ -8,7 +8,7 @@ const Developers = () => {
                 {
                     data.map((data, i) => (
                         <div className="card w-96 glass" key={i}>
-                            <figure><Image src={data.image} alt={data.name} /></figure>
+                            <figure><Image src={data.image} alt={data.name} style={{height: 512}} /></figure>
                             <div className="card-body">
                                 <h2 className="card-title">{data.name}</h2>
                                 <p>{data.description}</p>

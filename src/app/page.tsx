@@ -1,5 +1,6 @@
 'use client';
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
+import {Provider, useDispatch, useSelector} from 'react-redux';
 import UniversalHeader from "@/components/layout/UniversalHeader";
 import Footer from "@/components/layout/Footer";
 import Notification from "@/components/layout/Notification";
@@ -11,18 +12,49 @@ import ReactDOM from "react-dom";
 import { lightTheme, darkTheme } from "@/styles/styles";
 // @ts-ignore
 import styled, {ThemeProvider} from 'styled-components';
-import TextSizeControl from "@/components/layout/TextSizeControl";
 import {GlobalStyle} from "@/styles/styles";
 import styles from "../styles/index.module.css";
+// @ts-ignore
+import {setTheme, showNotification, closeNotification, increaseFontSize, decreaseFontSize, setSettingsIsOpen} from "../redux/actions/actions";
+import store from "../redux/stores/store";
 
 export default function Home() {
-  const theme = localStorage.getItem("theme");
-  const [themeState, setThemeState] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
-  const [selectedTheme, setSelectedTheme] = useState('light');
-  const [fontSize, setFontSize] = useState(16);
-  const [contrast, setContrast] = useState('black-on-white');
+
+    const dispatch = useDispatch();
+    // @ts-ignore
+    const { theme, fontSize } = useSelector((state) => state);
+
+    const handleThemeChange = (theme: String) => {
+        dispatch(setTheme(theme));
+    };
+
+    const handleSettingsIsOpen = (isOpen: Boolean) => {
+        dispatch(setSettingsIsOpen(isOpen));
+    }
+
+    const handleShowNotification = () => {
+        dispatch(showNotification());
+    };
+
+    const handleCloseNotification = () => {
+        dispatch(closeNotification());
+    };
+
+   const handleIncreaseFontSize = (num: Number) => {
+       // @ts-ignore
+       dispatch(increaseFontSize(num));
+   }
+
+   const handleDecreaseFontSize = (num: Number) => {
+       // @ts-ignore
+       dispatch(decreaseFontSize(num));
+   }
+
+    useEffect(() => {
+        const delay = setTimeout(() => {
+            handleShowNotification();
+        }, 1000);
+    }, []);
 
     const ThemeContainer = styled.div`
       display: flex;
@@ -30,54 +62,18 @@ export default function Home() {
       justify-content: center;
       align-items: center;
       padding: 20px;
-      background: ${selectedTheme === "light" ? "#fff" : "#000"};
-      color: ${selectedTheme === "light" ? "#000" : "#fff"};
+      background: ${theme === "light" ? "#fff" : "#000"};
+      color: ${theme === "light" ? "#000" : "#fff"};
       border-bottom: 1px solid hsl(0, 0%, 87%);
     `;
 
-    const ThemeButton = styled.button`
-      margin: 0 5px;
-      font-size: 1rem;
-      border: 1px solid hsl(0, 0%, 87%);
-      border-radius: 5px;
-      width: 100px;
-      height: 35px;
-      cursor: pointer;
-      background: ${selectedTheme === "light" ? "white" : "black"};
-      color: ${selectedTheme === "light" ? "black" : "white"};
-      &:hover {
-        box-shadow: 2px 2px 2px hsl(0, 0%, 87%);
-`;
-
-    const handleThemeChange = () => {
-        selectedTheme === "light" ? setSelectedTheme("dark") : setSelectedTheme("light");
-    }
-
-    const handleShowNotification = () => {
-        setShowNotification(true);
-    };
-
-    const handleCloseNotification = () => {
-        setShowNotification(false);
-    };
-
-    useEffect(() => {
-        const delay = setTimeout(() => {
-            handleShowNotification();
-        }, 1000);
-    }, [])
-
-    const saveTheme = (t: String) => {
-        localStorage.setItem("theme", t.toString());
-        setThemeState(t.toString());
-    }
-
     return (
-        <main className="homePageMain" id="main" style={{ fontSize, color: contrast === 'black-on-white' ? 'black' : 'white', background: contrast === 'black-on-white' ? 'white' : 'black' }}>
-            <ThemeProvider theme={selectedTheme === "light" ? lightTheme : darkTheme}>
+        <main className="homePageMain" id="main">
+            <Provider store={store}>
+            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
                 <GlobalStyle />
-            <UniversalHeader theme={selectedTheme} />
-        <div className="hero min-h-screen" data-theme={selectedTheme} style={{backgroundImage: `url("https://images.pexels.com/photos/3975590/pexels-photo-3975590.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")`}}>
+                <UniversalHeader theme={theme} />
+        <div className="hero min-h-screen" data-theme={theme} style={{backgroundImage: `url("https://images.pexels.com/photos/3975590/pexels-photo-3975590.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")`, fontSize: fontSize}}>
             <div className="hero-overlay bg-opacity-60"></div>
           <div className="hero-content text-center text-neutral-content">
             <div className="max-w-md">
@@ -92,7 +88,7 @@ export default function Home() {
                 <ul className="p-2 bg-base-100">
                   {config.daisyui.themes.map((t: String) => {
                     return (
-                        <li onClick={() => saveTheme(t.toString())} key={t.toString()}><a>{t}</a></li>
+                        <li onClick={() => handleThemeChange(t.toString())} key={t.toString()}><a>{t}</a></li>
                     );
                   })
                   }
@@ -101,37 +97,38 @@ export default function Home() {
             </div>
           </div>
         </div>
-          <div data-theme={selectedTheme} style={{padding: 100}}>
+          <div data-theme={theme} style={{padding: 100}}>
               <h1 style={{textAlign: "center", fontSize: 36}}>Our Team</h1>
               <Developers />
           </div>
-                <dialog id="my_modal_1" className="modal" open={isOpen}>
+                <dialog id="my_modal_1" className="modal" open={store.getState().isOpen}>
                     <div className="modal-box" style={{background: "#0F172A"}}>
-                        <ThemeContainer style={{background: "#0F172A", color: "darkorange"}}>
-                            <span>Change theme: </span>
-                            <ThemeButton onClick={() => handleThemeChange()}>{selectedTheme.toString()}</ThemeButton><br /><br/>
-                            <TextSizeControl onChange={setFontSize} /><br /><br/>
+                        <ThemeContainer style={{background: "#0F172A", color: "darkorange", fontSize: fontSize}}>
+                            <label>Font Size: </label>
+                            <button className="font-btn" onClick={() => handleIncreaseFontSize(1)}> + </button>
+                            <span>{ store.getState().fontSize }</span>
+                            <button className="font-btn" onClick={() => handleDecreaseFontSize(1)}> - </button>
                         </ThemeContainer>
                         <div className="modal-action">
                             <form method="dialog">
-                                <button className="btn" onClick={() => setIsOpen(false)}>Close</button>
+                                <button className="btn" onClick={() => handleSettingsIsOpen(false)}>Close</button>
                             </form>
                         </div>
                   </div>
                 </dialog>
                 <div className={styles.modalContainer}>
-                    <button onClick={() => setIsOpen(true)} className={styles.modalBtn}>Settings</button>
+                    <button onClick={() => handleSettingsIsOpen(true)} className={styles.modalBtn}>Settings</button>
                 </div>
-        <Footer theme={selectedTheme} />
+        <Footer theme={theme} />
             </ThemeProvider>
-          {/*Notification*/}
           <div>
-              {showNotification &&
+              {store.getState().showNotification &&
                   ReactDOM.createPortal(
                       <Notification message="Welcome! You have successfully entered as a guest" onClose={handleCloseNotification} />,
                       document.body
                   )}
           </div>
+            </Provider>
         </main>
   );
 }

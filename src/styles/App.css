@@ -17,3 +17,8 @@
     border-color: green;
 }
 
+.font-btn {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+}
