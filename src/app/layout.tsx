@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Providers from '@/app/providers';
 import Header from '@/components/layout/Header';
+import Main from "@/components/layout/Main";
 import { Toaster } from 'react-hot-toast';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Header session={session} />
           <Toaster position='top-center' />
           {children}
+          <Main />
         </Providers>
       </body>
     </html>
