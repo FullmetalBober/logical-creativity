@@ -25,7 +25,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Header session={session} />
           <Toaster position='top-center' />
           {children}
-          <Main />
         </Providers>
       </body>
     </html>

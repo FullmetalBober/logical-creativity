@@ -23,3 +23,7 @@ body {
 main {
   @apply max-w-[1064px] mx-auto;
 }
+
+.mainContainer {
+  max-width: 100% !important;
+}
